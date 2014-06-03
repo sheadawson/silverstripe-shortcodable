@@ -1,0 +1,17 @@
+.htmleditorfield-shortcodable .ss-shortcodable {
+	padding: 8px 16px;
+}
+
+.htmleditorfield-shortcodable.loading .ss-shortcodable,
+.htmleditorfield-shortcodable.loading .Actions{
+	opacity: 0;
+}
+
+
+.htmleditorfield-shortcodable .ss-shortcodable .field .chzn-container{
+	max-width: 100%;
+}
+
+.defaultSkin span.mce_shortcode{
+	background: url(../images/shortcodable.png) no-repeat center center;
+}

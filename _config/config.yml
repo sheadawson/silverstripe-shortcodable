@@ -1,0 +1,6 @@
+LeftAndMain:
+  extra_requirements_javascript:
+    - 'shortcodable/javascript/editor_plugin.js'
+    - 'shortcodable/javascript/shortcodable.js'
+  extra_requirements_css:
+    - 'shortcodable/css/shortcodable.css'
