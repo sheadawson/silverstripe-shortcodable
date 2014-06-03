@@ -9,15 +9,6 @@ if (SHORTCODABLE_DIR != 'shortcodable') {
 HtmlEditorConfig::get('cms')->enablePlugins(array('shortcodable' => sprintf('../../../%s/javascript/editor_plugin.js', SHORTCODABLE_DIR)));
 HtmlEditorConfig::get('cms')->addButtonsToLine(1, 'shortcodable');
 
-$returnShortcodeData = function($arguments, $content, $parser, $shortcode){
-	$data = array(
-		'attributes' => $arguments,
-		'content' => $content,
-		'shortcode' => $shortcode
-	);
-	return $data;
-};
-
 // register shortcode parsers for Shortcodable implementors
 foreach (ClassInfo::implementorsOf('Shortcodable') as $class) {
 	$name = $class;
