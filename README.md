@@ -1,18 +1,21 @@
 # SilverStripe Shortcodable
 Provides a GUI for CMS users to insert Shortcodes into the HTMLEditorField + an API for developers to define Shortcodable DataObjects and Views. This allows CMS users to easily embed and customise DataObjects and templated HTML snippets anywhere amongst their page content. 
 
-## Maintainer Contacts
-*  Shea Dawson (<shea@livesource.co.nz>)
-
 ## Requirements
 * SilverStripe 3.1 +
 
+## Installation
+Install via composer, run dev/build
+```
+composer require sheadawson/silverstripe-shortcodable
+```
+
 ## CMS Usage
 
-Once installed a new icon will appear in the CMS HTMLEditor toolbar. It looks like this: ![icon](https://raw.github.com/sheadawson/silverstripe-shortcodable/master/images/shortcodable.png)
+Once installed a new icon will appear in the CMS HTMLEditor toolbar. It looks like this: 
+![icon](https://raw.github.com/sheadawson/silverstripe-shortcodable/master/images/shortcodable.png)
 
 Clicking the toolbar icon opens a popup that looks like this:
-
 ![Screenshot](https://raw.github.com/sheadawson/silverstripe-shortcodable/master/images/screenshot.png)
 
 ## API Usage
