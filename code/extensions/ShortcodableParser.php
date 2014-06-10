@@ -7,7 +7,7 @@
  */
 class ShortcodableParser extends Object{
 
-	protected $shortcodes;
+	protected $shortcodes = array();
 
 	public function register($name){
 		$this->shortcodes[$name] = $name;
