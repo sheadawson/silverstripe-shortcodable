@@ -69,3 +69,5 @@ public static function parse_shortcode($arguments, $content, $parser, $shortcode
 }
 ```
 
+Create the ImageGallery.ss template then that's it, done!
+
