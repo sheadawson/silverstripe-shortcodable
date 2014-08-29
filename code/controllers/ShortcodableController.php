@@ -91,6 +91,8 @@ class ShortcodableController extends Controller{
 		if($shortcodeData){
 			$form->loadDataFrom($shortcodeData['atts']);
 		}
+		
+		$this->extend('updateShortcodeForm', $form);
 
 		return $form;
 	}
