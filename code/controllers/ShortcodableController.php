@@ -28,6 +28,7 @@ class ShortcodableController extends Controller{
 		$classname = false;
 		$shortcodeData = false;
 		if($shortcode = $this->request->requestVar('Shortcode')){
+			$shortcode = str_replace("\xEF\xBB\xBF", '', $shortcode); //remove BOM inside string on cursor position...
 			$shortcodeData = singleton('ShortcodableParser')->the_shortcodes(array(), $shortcode);
 			if(isset($shortcodeData[0])){
 				$shortcodeData = $shortcodeData[0]; 
