@@ -64,7 +64,11 @@ class ShortcodableController extends Controller{
 			if (class_exists($classname)) {
 				$class = singleton($classname);
 				if (is_subclass_of($class, 'DataObject')) {
-					$dataObjectSource = $classname::get()->map()->toArray();
+					if(singleton($classname)->hasMethod('get_shortcodable_records')){
+						$dataObjectSource = $classname::get_shortcodable_records();
+					}else{
+						$dataObjectSource = $classname::get()->map()->toArray();	
+					}
 					$fields->push(
 						DropdownField::create('id', $class->singular_name(), $dataObjectSource)
 							->setHasEmptyDefault(true)

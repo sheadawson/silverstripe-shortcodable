@@ -67,7 +67,17 @@ public static function parse_shortcode($arguments, $content, $parser, $shortcode
 		return $gallery->customise($data)->renderWith('ImageGallery');
 	}
 }
-```
+``` 
 
 Create the ImageGallery.ss template then that's it, done!
 
+
+### Optional configuration
+
+If you would like to customise or filter the list of available shortcodable DataObject records available in the dropdown, you can supply a custom get_shortcodable_records static method on your shortcodable DataObject. The method should return an associative array suitable for the DropdownField. For example:
+
+```php
+public static function get_shortcodable_records(){
+	return ImageGallery::get()->filter('SomeField', 'SomeValue')->map()->toArray();
+}
+```
