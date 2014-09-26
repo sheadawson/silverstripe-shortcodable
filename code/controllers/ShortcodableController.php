@@ -6,9 +6,63 @@
  * @author shea@livesource.co.nz
  **/
 class ShortcodableController extends Controller{
+
+	#ShortcodableController/$ShortcodeType
+
 	private static $allowed_actions = array(
 		'ShortcodeForm'
 	);
+
+	protected $shortcodableclass;
+	protected $isnew = true;
+	protected $shortcodedata;
+
+	function init(){
+		parent::init();
+		// figure out class of shortcodable
+		if($data = $this->getShortcodeData()){
+			$this->isnew = false;
+			$this->shortcodableclass = $data['name'];
+		}else{
+			$this->shortcodableclass = $this->request->requestVar('ShortcodeType');	
+		}
+
+	}
+
+	function Link(){
+		//TODO: build link with embedded shortcodable type
+		//edit/$ShortcodeType/$ID
+		return parent::Link();
+	}
+
+	/**
+	 * create a list of shortcodable classes for the ShortcodeType dropdown
+	 * @return array shortcodables
+	 */
+	protected function getShortcodablesList(){
+		$classList = ClassInfo::implementorsOf('Shortcodable');
+		$classes = array();
+		foreach ($classList as $class) {
+			$classes[$class] = singleton($class)->singular_name();
+		}
+		return $classes;
+	}
+
+	protected function getShortcodeData(){
+		if($this->shortcodedata){
+			return $this->shortcodedata;
+		}
+		$data = false;
+		if($shortcode = $this->request->requestVar('Shortcode')){
+			//remove BOM inside string on cursor position...
+			$shortcode = str_replace("\xEF\xBB\xBF", '', $shortcode);
+			$data = singleton('ShortcodableParser')->the_shortcodes(array(), $shortcode);
+			if(isset($data[0])){
+				$this->shortcodedata = $data[0];
+				return $this->shortcodedata;
+			}
+		}
+	}
 
 	/**
 	 * Provides a GUI for the insert/edit shortcode popup 
@@ -17,31 +71,13 @@ class ShortcodableController extends Controller{
 	public function ShortcodeForm(){
 		if(!Permission::check('CMS_ACCESS_CMSMain')) return;
 
-		// create a list of shortcodable classes for the ShortcodeType dropdown
-		$classList = ClassInfo::implementorsOf('Shortcodable');
-		$classes = array();
-		foreach ($classList as $class) {
-			$classes[$class] = singleton($class)->singular_name();
-		}
+		$classes = $this->getShortcodablesList();
+		$classname = $this->shortcodableclass;
 
-		// load from the currently selected ShortcodeType or Shortcode data
-		$classname = false;
-		$shortcodeData = false;
-		if($shortcode = $this->request->requestVar('Shortcode')){
-			$shortcode = str_replace("\xEF\xBB\xBF", '', $shortcode); //remove BOM inside string on cursor position...
-			$shortcodeData = singleton('ShortcodableParser')->the_shortcodes(array(), $shortcode);
-			if(isset($shortcodeData[0])){
-				$shortcodeData = $shortcodeData[0]; 
-				$classname = $shortcodeData['name'];
-			}
-		}else{
-			$classname = $this->request->requestVar('ShortcodeType');	
-		}
-
-		if($shortcodeData){
-			$headingText = _t('Shortcodable.EDITSHORTCODE', 'Edit Shortcode');
-		}else{
+		if($this->isnew){
 			$headingText = _t('Shortcodable.INSERTSHORTCODE', 'Insert Shortcode');
+		}else{
+			$headingText = _t('Shortcodable.EDITSHORTCODE', 'Edit Shortcode');
 		}
 
 		// essential fields
@@ -93,8 +129,8 @@ class ShortcodableController extends Controller{
 			->loadDataFrom($this)
 			->addExtraClass('htmleditorfield-form htmleditorfield-shortcodable cms-dialog-content');
 		
-		if($shortcodeData){
-			$form->loadDataFrom($shortcodeData['atts']);
+		if($data = $this->getShortcodeData()){
+			$form->loadDataFrom($data['atts']);
 		}
 		
 		$this->extend('updateShortcodeForm', $form);
