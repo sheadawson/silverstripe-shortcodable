@@ -8,8 +8,9 @@
 class ShortcodableController extends Controller{
 
 	private static $allowed_actions = array(
-		'ShortcodeForm',
-		'handleEdit'
+		'ShortcodeForm' => 'ADMIN',
+		'index' => 'ADMIN',
+		'handleEdit' => 'ADMIN'
 	);
 
 	private static $url_handlers = array(
@@ -93,8 +94,6 @@ class ShortcodableController extends Controller{
 	 * @return Form
 	 **/
 	public function ShortcodeForm(){
-		if(!Permission::check('CMS_ACCESS_CMSMain')) return;
-
 		$classes = $this->getShortcodablesList();
 		$classname = $this->shortcodableclass;
 
