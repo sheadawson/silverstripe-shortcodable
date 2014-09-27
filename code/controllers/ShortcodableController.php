@@ -7,32 +7,52 @@
  **/
 class ShortcodableController extends Controller{
 
-	#ShortcodableController/$ShortcodeType
-
 	private static $allowed_actions = array(
-		'ShortcodeForm'
+		'ShortcodeForm',
+		'handleEdit'
+	);
+
+	private static $url_handlers = array(
+		'edit/$ShortcodeType!/$Action//$ID/$OtherID' => 'handleEdit'
 	);
 
 	protected $shortcodableclass;
 	protected $isnew = true;
 	protected $shortcodedata;
 
+	/**
+	 * Get the shortcodable class by whatever means possible.
+	 * Determine if this is a new shortcode, or editing an existing one.
+	 */
 	function init(){
 		parent::init();
-		// figure out class of shortcodable
 		if($data = $this->getShortcodeData()){
 			$this->isnew = false;
 			$this->shortcodableclass = $data['name'];
+		}elseif($type = $this->request->requestVar('ShortcodeType')){
+			$this->shortcodableclass = $type;	
 		}else{
-			$this->shortcodableclass = $this->request->requestVar('ShortcodeType');	
+			$this->shortcodableclass = $this->request->param('ShortcodeType');
 		}
-
 	}
 
-	function Link(){
-		//TODO: build link with embedded shortcodable type
-		//edit/$ShortcodeType/$ID
+	/**
+	 * Point to edit link, if shortcodable class exists.
+	 */
+	public function Link(){
+		if($this->shortcodableclass){
+			return Controller::join_links(
+				parent::Link(),
+				'edit',
+				$this->shortcodableclass
+			);
+		}
 		return parent::Link();
+	}
+
+	public function handleEdit(SS_HTTPRequest $request){
+		$this->shortcodableclass = $request->param('ShortcodeType');
+		return $this->handleAction($request, $action = $request->param('Action'));
 	}
 
 	/**
