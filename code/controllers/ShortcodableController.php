@@ -68,6 +68,10 @@ class ShortcodableController extends Controller{
 		return $classes;
 	}
 
+	/**
+	 * Get the shortcode data from the request.
+	 * @return array shortcodedata
+	 */
 	protected function getShortcodeData(){
 		if($this->shortcodedata){
 			return $this->shortcodedata;
@@ -94,26 +98,32 @@ class ShortcodableController extends Controller{
 		$classes = $this->getShortcodablesList();
 		$classname = $this->shortcodableclass;
 
-		if($this->isnew){
-			$headingText = _t('Shortcodable.INSERTSHORTCODE', 'Insert Shortcode');
-		}else{
-			$headingText = _t('Shortcodable.EDITSHORTCODE', 'Edit Shortcode');
-		}
+		$headingText = $this->isnew ?
+			 _t('Shortcodable.INSERTSHORTCODE', 'Insert Shortcode') :
+			 sprintf(
+			 	_t('Shortcodable.EDITSHORTCODE', 'Edit %s Shortcode'),
+			 	singleton($classname)->singular_name()
+			 );
 
 		// essential fields
 		$fields = FieldList::create(array(
-			CompositeField::create(
+			$setupfields = CompositeField::create(
 				LiteralField::create(
 					'Heading', 
-					sprintf('<h3 class="htmleditorfield-shortcodeform-heading insert">%s</h3>', $headingText)
+					sprintf(
+						'<h3 class="htmleditorfield-shortcodeform-heading insert">%s</h3>',
+						$headingText
+					)
 				)
 			)->addExtraClass('CompositeField composite cms-content-header nolabel'),
-			LiteralField::create('shortcodablefields', '<div class="ss-shortcodable content">'),
-			DropdownField::create('ShortcodeType', 'ShortcodeType', $classes, $classname)
-				->setHasEmptyDefault(true)
-				->addExtraClass('shortcode-type')
-			
+			LiteralField::create('shortcodablefields', '<div class="ss-shortcodable content">')
 		));
+
+		if($this->isnew){
+			$setupfields->push(DropdownField::create('ShortcodeType', 'ShortcodeType', $classes, $classname)
+				->setHasEmptyDefault(true)
+				->addExtraClass('shortcode-type'));
+		}
 
 		// attribute and object id fields
 		if($classname){
@@ -131,7 +141,10 @@ class ShortcodableController extends Controller{
 					);
 				}
 				if($attrFields = $classname::shortcode_attribute_fields()){
-					$fields->push(CompositeField::create($attrFields)->addExtraClass('attributes-composite'));
+					$fields->push(
+						CompositeField::create($attrFields)
+							->addExtraClass('attributes-composite')
+						);
 				}
 			}
 		}
