@@ -16,6 +16,8 @@ class ShortcodableController extends Controller{
 	 **/
 	public function ShortcodeForm(){
 		if(!Permission::check('CMS_ACCESS_CMSMain')) return;
+		
+		Config::inst()->update('SSViewer', 'theme_enabled', false);
 
 		// create a list of shortcodable classes for the ShortcodeType dropdown
 		$classList = ClassInfo::implementorsOf('Shortcodable');
