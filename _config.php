@@ -12,7 +12,7 @@ HtmlEditorConfig::get('cms')->addButtonsToLine(1, 'shortcodable');
 // register shortcode parsers for Shortcodable implementors
 foreach (ClassInfo::implementorsOf('Shortcodable') as $class) {
 	$name = $class;
-	ShortcodeParser::get('default')->register($name, array($class, 'parse_shortcode'));	
-	// TODO - update SS ShortcodeParser to offer a public api for converting a shortcode to a data array, and use that instead. 
+	ShortcodeParser::get('default')->register($name, array($class, 'parse_shortcode'));
+	// TODO - update SS ShortcodeParser to offer a public api for converting a shortcode to a data array, and use that instead.
 	singleton('ShortcodableParser')->register($name);
 }

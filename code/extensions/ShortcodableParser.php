@@ -2,24 +2,24 @@
 /**
  * ShortcodableParser - temporary measure, based on wordpress parser
  * This parser is only used to parse tags in the html editor field for editing in the popup window
- * @todo update SS ShortcodeParser to offer a public api for converting a shortcode to a data array, and use that instead. 
+ * @todo update SS ShortcodeParser to offer a public api for converting a shortcode to a data array, and use that instead.
  * @package Shortcodable
  */
 class ShortcodableParser extends Object{
 
 	protected $shortcodes = array();
 
-	public function register($name){
+	public function register($name) {
 		$this->shortcodes[$name] = $name;
 	}
-	
-	function get_pattern( $text ) {
+
+	public function get_pattern( $text ) {
 	    $pattern = $this->get_shortcode_regex();
 	    preg_match_all( "/$pattern/s", $text, $c );
 	    return $c;
 	}
 
-	function parse_atts( $content ) {
+	public function parse_atts( $content ) {
 	    $content = preg_match_all( '/([^ ]*)=(\'([^\']*)\'|\"([^\"]*)\"|([^ ]*))/', trim( $content ), $c );
 	    list( $dummy, $keys, $values ) = array_values( $c );
 	    $c = array();
@@ -36,7 +36,7 @@ class ShortcodableParser extends Object{
 	    return $c;
 	}
 
-	function the_shortcodes($output, $text, $child = false ) {
+	public function the_shortcodes($output, $text, $child = false ) {
 	    $patts = $this->get_pattern( $text );
 	    $t = array_filter( $this->get_pattern( $text ) );
 	    if ( ! empty( $t ) ) {
@@ -57,11 +57,11 @@ class ShortcodableParser extends Object{
 	    return array_values( $output );
 	}
 
-	function get_shortcode_regex() {
+	public function get_shortcode_regex() {
 			$shortcode_tags = $this->shortcodes;
 	        $tagnames = array_keys($shortcode_tags);
 	        $tagregexp = join( '|', array_map('preg_quote', $tagnames) );
-	
+
 	        // WARNING! Do not change this regex without changing do_shortcode_tag() and strip_shortcode_tag()
 	        // Also, see shortcode_unautop() and shortcode.js.
 	        return
