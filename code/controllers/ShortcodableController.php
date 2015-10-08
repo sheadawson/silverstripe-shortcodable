@@ -14,7 +14,7 @@ class ShortcodableController extends Controller{
 	 * Provides a GUI for the insert/edit shortcode popup 
 	 * @return Form
 	 **/
-	public function ShortcodeForm(){
+	public function ShortcodeForm() {
 		if(!Permission::check('CMS_ACCESS_CMSMain')) return;
 		
 		Config::inst()->update('SSViewer', 'theme_enabled', false);
@@ -29,20 +29,20 @@ class ShortcodableController extends Controller{
 		// load from the currently selected ShortcodeType or Shortcode data
 		$classname = false;
 		$shortcodeData = false;
-		if($shortcode = $this->request->requestVar('Shortcode')){
+		if($shortcode = $this->request->requestVar('Shortcode')) {
 			$shortcode = str_replace("\xEF\xBB\xBF", '', $shortcode); //remove BOM inside string on cursor position...
 			$shortcodeData = singleton('ShortcodableParser')->the_shortcodes(array(), $shortcode);
-			if(isset($shortcodeData[0])){
+			if(isset($shortcodeData[0])) {
 				$shortcodeData = $shortcodeData[0]; 
 				$classname = $shortcodeData['name'];
 			}
-		}else{
+		} else {
 			$classname = $this->request->requestVar('ShortcodeType');	
 		}
 
-		if($shortcodeData){
+		if($shortcodeData) {
 			$headingText = _t('Shortcodable.EDITSHORTCODE', 'Edit Shortcode');
-		}else{
+		} else {
 			$headingText = _t('Shortcodable.INSERTSHORTCODE', 'Insert Shortcode');
 		}
 
@@ -62,13 +62,13 @@ class ShortcodableController extends Controller{
 		));
 
 		// attribute and object id fields
-		if($classname){
+		if($classname) {
 			if (class_exists($classname)) {
 				$class = singleton($classname);
 				if (is_subclass_of($class, 'DataObject')) {
-					if(singleton($classname)->hasMethod('get_shortcodable_records')){
+					if(singleton($classname)->hasMethod('get_shortcodable_records')) {
 						$dataObjectSource = $classname::get_shortcodable_records();
-					}else{
+					} else {
 						$dataObjectSource = $classname::get()->map()->toArray();	
 					}
 					$fields->push(
@@ -76,7 +76,7 @@ class ShortcodableController extends Controller{
 							->setHasEmptyDefault(true)
 					);
 				}
-				if($attrFields = $classname::shortcode_attribute_fields()){
+				if($attrFields = $classname::shortcode_attribute_fields()) {
 					$fields->push(CompositeField::create($attrFields)->addExtraClass('attributes-composite'));
 				}
 			}
@@ -95,7 +95,7 @@ class ShortcodableController extends Controller{
 			->loadDataFrom($this)
 			->addExtraClass('htmleditorfield-form htmleditorfield-shortcodable cms-dialog-content');
 		
-		if($shortcodeData){
+		if($shortcodeData) {
 			$form->loadDataFrom($shortcodeData['atts']);
 		}
 		
