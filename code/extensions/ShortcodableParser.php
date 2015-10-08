@@ -13,13 +13,13 @@ class ShortcodableParser extends Object{
 		$this->shortcodes[$name] = $name;
 	}
 	
-	function get_pattern( $text ) {
+	public function get_pattern( $text ) {
 	    $pattern = $this->get_shortcode_regex();
 	    preg_match_all( "/$pattern/s", $text, $c );
 	    return $c;
 	}
 
-	function parse_atts( $content ) {
+	public function parse_atts( $content ) {
 	    $content = preg_match_all( '/([^ ]*)=(\'([^\']*)\'|\"([^\"]*)\"|([^ ]*))/', trim( $content ), $c );
 	    list( $dummy, $keys, $values ) = array_values( $c );
 	    $c = array();
@@ -36,7 +36,7 @@ class ShortcodableParser extends Object{
 	    return $c;
 	}
 
-	function the_shortcodes($output, $text, $child = false ) {
+	public function the_shortcodes($output, $text, $child = false ) {
 	    $patts = $this->get_pattern( $text );
 	    $t = array_filter( $this->get_pattern( $text ) );
 	    if ( ! empty( $t ) ) {
@@ -57,7 +57,7 @@ class ShortcodableParser extends Object{
 	    return array_values( $output );
 	}
 
-	function get_shortcode_regex() {
+	public function get_shortcode_regex() {
 			$shortcode_tags = $this->shortcodes;
 	        $tagnames = array_keys($shortcode_tags);
 	        $tagregexp = join( '|', array_map('preg_quote', $tagnames) );
