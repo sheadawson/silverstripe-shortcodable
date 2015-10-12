@@ -15,7 +15,7 @@ interface Shortcodable{
 	 * @param string $content the shortcode content
 	 * @param ShortcodeParser $parser the ShortcodeParser instance
 	 * @param string $shortcode the raw shortcode being parsed
-	 * @return String
+	 * @return string
 	 **/
 	public static function parse_shortcode($arguments, $content, $parser, $shortcode);
 
