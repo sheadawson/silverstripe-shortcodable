@@ -18,6 +18,7 @@ Once installed a new icon will appear in the CMS HTMLEditor toolbar. It looks li
 Clicking the toolbar icon opens a popup that looks like this:
 ![Screenshot](https://raw.github.com/sheadawson/silverstripe-shortcodable/master/images/screenshot.png)
 
+Note that currently there is a small issue when editing shortcodes. If you want to edit an existing shortcode, just make sure you select the whole thing before clicking the ![icon](https://raw.github.com/sheadawson/silverstripe-shortcodable/master/images/shortcodable.png) icon.
 ## API Usage
 
 Implement the Shortcodable interface on the object you would like to make Shortcodable. This automatically registers the object with SilverStripe's shortcode parser and the Shortcodable module. In this example we'll create a shortcodable Image Gallery.
