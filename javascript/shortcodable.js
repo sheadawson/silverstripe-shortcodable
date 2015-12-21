@@ -81,7 +81,11 @@
 					attributesComposite.find(":input").each(function(){
 						var attributeField = $(this);
 						if(attributeField.val() !== ''){
-							attributes[attributeField.prop('name')] = attributeField.val();	
+							if(attributeField.is('.checkbox')) {
+								attributes[attributeField.prop('name')] = attributeField.is(':checked') ? 1 : 0;
+							} else {
+								attributes[attributeField.prop('name')] = attributeField.val();		
+							}
 						}
 					});
 				}
