@@ -32,16 +32,17 @@ Implementors of Shortcodable require 2 static methods, the first being shortcode
 ```php
 /**
  * returns a list of fields for editing the shortcode's attributes
- * @return Fieldlist
+ *
+ * @return FieldList
  **/
-public static function shortcode_attribute_fields(){
-	return FieldList::create(
-		DropdownField::create(
-			'Style', 
-			'Gallery Style', 
-			array('Carousel' => 'Carousel', 'Lightbox' => 'Lightbox')
-		)
-	);
+public static function shortcode_attribute_fields() {
+    return FieldList::create(
+        DropdownField::create(
+            'Style', 
+            'Gallery Style', 
+            array('Carousel' => 'Carousel', 'Lightbox' => 'Lightbox')
+        )
+    );
 }
 ```
 
@@ -50,20 +51,23 @@ The second method required is parse_shortcode. This method is responsible for tr
 ```php
 /**
  * Parse the shortcode and render as a string, probably with a template
+ *
  * @param array $arguments the list of attributes of the shortcode
  * @param string $content the shortcode content
  * @param ShortcodeParser $parser the ShortcodeParser instance
  * @param string $shortcode the raw shortcode being parsed
- * @return String
+ *
+ * @return string
  **/
-public static function parse_shortcode($arguments, $content, $parser, $shortcode){
-	// check the gallery exists
-	if(isset($arguments['id']) && $gallery = ImageGallery::get()->byID($arguments['id'])){
-		// collect custom attributes
-		$data = array();
-		if(isset($arguments['Style'])){
+public static function parse_shortcode($arguments, $content, $parser, $shortcode) {
+    // check the gallery exists
+    if(isset($arguments['id']) && $gallery = ImageGallery::get()->byID($arguments['id'])) {
+        // collect custom attributes
+        $data = array();
+		if(isset($arguments['Style'])) {
 			$data['Style'] = $arguments['Style'];
 		}
+
 		// render with template
 		return $gallery->customise($data)->renderWith('ImageGallery');
 	}
@@ -78,7 +82,10 @@ Create the ImageGallery.ss template then that's it, done!
 If you would like to customise or filter the list of available shortcodable DataObject records available in the dropdown, you can supply a custom get_shortcodable_records static method on your shortcodable DataObject. The method should return an associative array suitable for the DropdownField. For example:
 
 ```php
-public static function get_shortcodable_records(){
+/**
+ * @return ViewableData
+ */
+public static function get_shortcodable_records() {
 	return ImageGallery::get()->filter('SomeField', 'SomeValue')->map()->toArray();
 }
 ```
