@@ -13,7 +13,7 @@
 		},
 
 		init : function(ed, url) {
-			ed.addButton('shortcodable', {title : 'Insert Shortcode', cmd : 'shortcodable', 'class' : 'mce_shortcode'}); 
+			ed.addButton('shortcodable', {title : 'Insert Shortcode', cmd : 'shortcodable', 'class' : 'mce_shortcode'});
 
 			ed.addCommand('shortcodable', function(ed) {
 				jQuery('#' + this.id).entwine('ss').openShortcodeDialog();

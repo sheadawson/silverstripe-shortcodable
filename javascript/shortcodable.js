@@ -30,7 +30,7 @@
 					postdata.ShortcodeType = data;
 				}else if(from =='shortcode'){
 					postdata.Shortcode = data;
-				} 
+				}
 
 				this.addClass('loading');
 
@@ -62,7 +62,7 @@
 				var html = data.shortcodeType;
 
 				for (var key in data.attributes) {
-				    html += ' ' + key + '="' + data.attributes[key] + '"'; 
+				    html += ' ' + key + '="' + data.attributes[key] + '"';
 				}
 
 				return "[" + html + "]";
@@ -84,18 +84,18 @@
 							if(attributeField.is('.checkbox')) {
 								attributes[attributeField.prop('name')] = attributeField.is(':checked') ? 1 : 0;
 							} else {
-								attributes[attributeField.prop('name')] = attributeField.val();		
+								attributes[attributeField.prop('name')] = attributeField.val();
 							}
 						}
 					});
 				}
 
-				return {	
+				return {
 					'shortcodeType' : this.find(':input[name=ShortcodeType]').val(),
 					'attributes' : attributes
 				};
 			},
-			
+
 
 			resetFields: function() {
 				this._super();
