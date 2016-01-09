@@ -1,18 +1,18 @@
 <?php
 /**
- * ShortcodableController
+ * ShortcodableController.
  *
- * @package Shortcodable
  * @author shea@livesource.co.nz
  **/
 class ShortcodableController extends Controller
 {
     private static $allowed_actions = array(
-        'ShortcodeForm'
+        'ShortcodeForm',
     );
 
     /**
-     * Provides a GUI for the insert/edit shortcode popup
+     * Provides a GUI for the insert/edit shortcode popup.
+     *
      * @return Form
      **/
     public function ShortcodeForm()
@@ -61,7 +61,7 @@ class ShortcodableController extends Controller
             LiteralField::create('shortcodablefields', '<div class="ss-shortcodable content">'),
             DropdownField::create('ShortcodeType', 'ShortcodeType', $classes, $classname)
                 ->setHasEmptyDefault(true)
-                ->addExtraClass('shortcode-type')
+                ->addExtraClass('shortcode-type'),
 
         ));
 
@@ -91,11 +91,11 @@ class ShortcodableController extends Controller
             FormAction::create('insert', _t('Shortcodable.BUTTONINSERTSHORTCODE', 'Insert shortcode'))
                 ->addExtraClass('ss-ui-action-constructive')
                 ->setAttribute('data-icon', 'accept')
-                ->setUseButtonTag(true)
+                ->setUseButtonTag(true),
         ));
 
         // form
-        $form = Form::create($this, "ShortcodeForm", $fields, $actions)
+        $form = Form::create($this, 'ShortcodeForm', $fields, $actions)
             ->loadDataFrom($this)
             ->addExtraClass('htmleditorfield-form htmleditorfield-shortcodable cms-dialog-content');
 
