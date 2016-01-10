@@ -7,13 +7,23 @@
  */
 class ShortcodableParser extends Object
 {
+    /**
+     * @var array
+     */
     protected $shortcodes = array();
 
+    /**
+     * @param string $name
+     */
     public function register($name)
     {
         $this->shortcodes[$name] = $name;
     }
 
+    /**
+     * @param string $text
+     * @return array
+     */
     public function get_pattern($text)
     {
         $pattern = $this->get_shortcode_regex();
@@ -22,6 +32,10 @@ class ShortcodableParser extends Object
         return $c;
     }
 
+    /**
+     * @param  string $content
+     * @return array
+     */
     public function parse_atts($content)
     {
         $content = preg_match_all('/([^ ]*)=(\'([^\']*)\'|\"([^\"]*)\"|([^ ]*))/', trim($content), $c);
@@ -41,6 +55,12 @@ class ShortcodableParser extends Object
         return $c;
     }
 
+    /**
+     * @param array $output
+     * @param string $text
+     * @param boolean $child
+     * @return array
+     */
     public function the_shortcodes($output, $text, $child = false)
     {
         $patts = $this->get_pattern($text);
@@ -64,6 +84,9 @@ class ShortcodableParser extends Object
         return array_values($output);
     }
 
+    /**
+     * @return string
+     */
     public function get_shortcode_regex()
     {
         $shortcode_tags = $this->shortcodes;
@@ -73,33 +96,33 @@ class ShortcodableParser extends Object
         // WARNING! Do not change this regex without changing do_shortcode_tag() and strip_shortcode_tag()
         // Also, see shortcode_unautop() and shortcode.js.
         return
-                '\\['                              // Opening bracket
-                .'(\\[?)'                           // 1: Optional second opening bracket for escaping shortcodes: [[tag]]
-                ."($tagregexp)"                     // 2: Shortcode name
-                .'(?![\\w-])'                       // Not followed by word character or hyphen
-                .'('                                // 3: Unroll the loop: Inside the opening shortcode tag
-                .'[^\\]\\/]*'                   // Not a closing bracket or forward slash
-                .'(?:'
-                .'\\/(?!\\])'               // A forward slash not followed by a closing bracket
-                .'[^\\]\\/]*'               // Not a closing bracket or forward slash
-                .')*?'
-                .')'
-                .'(?:'
-                .'(\\/)'                        // 4: Self closing tag ...
-                .'\\]'                          // ... and closing bracket
-                .'|'
-                .'\\]'                          // Closing bracket
-                .'(?:'
-                .'('                        // 5: Unroll the loop: Optionally, anything between the opening and closing shortcode tags
-                .'[^\\[]*+'             // Not an opening bracket
-                .'(?:'
-                .'\\[(?!\\/\\2\\])' // An opening bracket not followed by the closing shortcode tag
-                .'[^\\[]*+'         // Not an opening bracket
-                .')*+'
-                .')'
-                .'\\[\\/\\2\\]'             // Closing shortcode tag
-                .')?'
-                .')'
-                .'(\\]?)';                          // 6: Optional second closing brocket for escaping shortcodes: [[tag]]
+            '\\['                              // Opening bracket
+            .'(\\[?)'                           // 1: Optional second opening bracket for escaping shortcodes: [[tag]]
+            ."($tagregexp)"                     // 2: Shortcode name
+            .'(?![\\w-])'                       // Not followed by word character or hyphen
+            .'('                                // 3: Unroll the loop: Inside the opening shortcode tag
+            .'[^\\]\\/]*'                   // Not a closing bracket or forward slash
+            .'(?:'
+            .'\\/(?!\\])'               // A forward slash not followed by a closing bracket
+            .'[^\\]\\/]*'               // Not a closing bracket or forward slash
+            .')*?'
+            .')'
+            .'(?:'
+            .'(\\/)'                        // 4: Self closing tag ...
+            .'\\]'                          // ... and closing bracket
+            .'|'
+            .'\\]'                          // Closing bracket
+            .'(?:'
+            .'('                        // 5: Unroll the loop: Optionally, anything between the opening and closing shortcode tags
+            .'[^\\[]*+'             // Not an opening bracket
+            .'(?:'
+            .'\\[(?!\\/\\2\\])' // An opening bracket not followed by the closing shortcode tag
+            .'[^\\[]*+'         // Not an opening bracket
+            .')*+'
+            .')'
+            .'\\[\\/\\2\\]'             // Closing shortcode tag
+            .')?'
+            .')'
+            .'(\\]?)';                          // 6: Optional second closing brocket for escaping shortcodes: [[tag]]
     }
 }

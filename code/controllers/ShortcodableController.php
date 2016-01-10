@@ -6,6 +6,9 @@
  **/
 class ShortcodableController extends Controller
 {
+    /**
+     * @var array
+     */
     private static $allowed_actions = array(
         'ShortcodeForm',
     );
