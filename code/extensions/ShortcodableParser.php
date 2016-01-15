@@ -33,7 +33,7 @@ class ShortcodableParser extends Object
     }
 
     /**
-     * @param  string $content
+     * @param string $content
      * @return array
      */
     public function parse_atts($content)
