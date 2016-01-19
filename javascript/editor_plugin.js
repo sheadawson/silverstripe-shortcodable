@@ -1,6 +1,4 @@
 (function() {
-	var each = tinymce.each;
-
 	tinymce.create('tinymce.plugins.shortcodable', {
 		getInfo : function() {
 			return {
