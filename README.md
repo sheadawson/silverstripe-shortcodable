@@ -1,5 +1,5 @@
 # SilverStripe Shortcodable
-Provides a GUI for CMS users to insert Shortcodes into the HTMLEditorField + an API for developers to define Shortcodable DataObjects and Views. This allows CMS users to easily embed and customise DataObjects and templated HTML snippets anywhere amongst their page content. 
+Provides a GUI for CMS users to insert Shortcodes into the HTMLEditorField + an API for developers to define Shortcodable DataObjects and Views. This allows CMS users to easily embed and customise DataObjects and templated HTML snippets anywhere amongst their page content.
 
 ## Requirements
 * SilverStripe 3.1 +
@@ -12,7 +12,7 @@ composer require sheadawson/silverstripe-shortcodable
 
 ## CMS Usage
 
-Once installed a new icon will appear in the CMS HTMLEditor toolbar. It looks like this: 
+Once installed a new icon will appear in the CMS HTMLEditor toolbar. It looks like this:
 ![icon](https://raw.github.com/sheadawson/silverstripe-shortcodable/master/images/shortcodable.png)
 
 Clicking the toolbar icon opens a popup that looks like this:
@@ -38,15 +38,15 @@ Implementors of Shortcodable require 2 static methods, the first being shortcode
 public static function shortcode_attribute_fields() {
     return FieldList::create(
         DropdownField::create(
-            'Style', 
-            'Gallery Style', 
+            'Style',
+            'Gallery Style',
             array('Carousel' => 'Carousel', 'Lightbox' => 'Lightbox')
         )
     );
 }
 ```
 
-The second method required is parse_shortcode. This method is responsible for transforming and rendering the shortcode in the frontend. Because ImageGallery extends DataObject, the id attribute field is automatically added to the shortcode_attribute_fields. The following example code checks if the shortcode's "id" argument has been set and is valid, collects relevant data from the shortcode's other attributes and renders the ImageGallery with the appropriate template. 
+The second method required is parse_shortcode. This method is responsible for transforming and rendering the shortcode in the frontend. Because ImageGallery extends DataObject, the id attribute field is automatically added to the shortcode_attribute_fields. The following example code checks if the shortcode's "id" argument has been set and is valid, collects relevant data from the shortcode's other attributes and renders the ImageGallery with the appropriate template.
 
 ```php
 /**
@@ -72,7 +72,7 @@ public static function parse_shortcode($arguments, $content, $parser, $shortcode
 		return $gallery->customise($data)->renderWith('ImageGallery');
 	}
 }
-``` 
+```
 
 Create the ImageGallery.ss template then that's it, done!
 
