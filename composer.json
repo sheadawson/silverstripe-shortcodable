@@ -22,5 +22,6 @@
     },
     "extra": {
         "installer-name": "shortcodable"
-    }
+    },
+    "homepage": "https://github.com/sheadawson/silverstripe-shortcodable"
 }
