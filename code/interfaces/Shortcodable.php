@@ -1,29 +1,36 @@
 <?php
 /**
- * Shortcodable interface
- * Apply this interface to your DataObject or ViewableData subclasses that wish
- * to implement the Shortcodable functionaility.
+ * Shortcodable
+ * Manages shortcodable configuration and register shortcodable objects
  *
  * @author shea@livesource.co.nz
  **/
-interface Shortcodable
+class Shortcodable extends Object
 {
-    /**
-     * Parse the shortcode and render as a string, probably with a template.
-     *
-     * @param array           $arguments the list of attributes of the shortcode
-     * @param string          $content   the shortcode content
-     * @param ShortcodeParser $parser    the ShortcodeParser instance
-     * @param string          $shortcode the raw shortcode being parsed
-     *
-     * @return string
-     **/
-    public static function parse_shortcode($arguments, $content, $parser, $shortcode);
+    private static $shortcodable_classes = array();
 
-    /**
-     * returns a list of fields for editing the shortcode's attributes.
-     *
-     * @return Fieldlist
-     **/
-    public static function shortcode_attribute_fields();
+    public static function register_classes($classes)
+    {
+        if (is_array($classes) && count($classes)) {
+            foreach ($classes as $class) {
+                self::register_class($class);
+            }
+        }
+    }
+
+    public static function register_class($class)
+    {
+        if (class_exists($class)) {
+            if (!singleton($class)->hasMethod('parseShortcode')) {
+                user_error("Failed to register \"$class\" with shortcodable. $class must have the method parseShortcode(). See /shortcodable/README.md", E_USER_ERROR);
+            }
+            ShortcodeParser::get('default')->register($class, array($class, 'parseShortcode'));
+            singleton('ShortcodableParser')->register($class);
+        }
+    }
+
+    public static function get_shortcodable_classes()
+    {
+        return Config::inst()->get('Shortcodable', 'shortcodable_classes');
+    }
 }

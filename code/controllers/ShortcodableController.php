@@ -27,10 +27,10 @@ class ShortcodableController extends Controller
         Config::inst()->update('SSViewer', 'theme_enabled', false);
 
         // create a list of shortcodable classes for the ShortcodeType dropdown
-        $classList = ClassInfo::implementorsOf('Shortcodable');
+        $classList = ShortCodable::get_shortcodable_classes();
         $classes = array();
         foreach ($classList as $class) {
-            $classes[$class] = singleton($class)->singular_name();
+            $classes[$class] = singleton($class)->hasMethod('singular_name') ? singleton($class)->singular_name() : $class;
         }
 
         // load from the currently selected ShortcodeType or Shortcode data
@@ -73,8 +73,8 @@ class ShortcodableController extends Controller
             if (class_exists($classname)) {
                 $class = singleton($classname);
                 if (is_subclass_of($class, 'DataObject')) {
-                    if (singleton($classname)->hasMethod('get_shortcodable_records')) {
-                        $dataObjectSource = $classname::get_shortcodable_records();
+                    if (singleton($classname)->hasMethod('getShortcodableRecords')) {
+                        $dataObjectSource = singleton($classname)->getShortcodableRecords();
                     } else {
                         $dataObjectSource = $classname::get()->map()->toArray();
                     }
@@ -83,8 +83,10 @@ class ShortcodableController extends Controller
                             ->setHasEmptyDefault(true)
                     );
                 }
-                if ($attrFields = $classname::shortcode_attribute_fields()) {
-                    $fields->push(CompositeField::create($attrFields)->addExtraClass('attributes-composite'));
+                if (singleton($classname)->hasMethod('getShortcodeFields')) {
+                    if ($attrFields = singleton($classname)->getShortcodeFields()) {
+                        $fields->push(CompositeField::create($attrFields)->addExtraClass('attributes-composite'));
+                    }
                 }
             }
         }
