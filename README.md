@@ -2,7 +2,7 @@
 Provides a GUI for CMS users to insert Shortcodes into the HTMLEditorField + an API for developers to define Shortcodable DataObjects and Views. This allows CMS users to easily embed and customise DataObjects and templated HTML snippets anywhere amongst their page content.
 
 # Upgrading from 1.x
-Shortcodable 2.0 has an improved method for applying Shortcodable to DataObjects. We no longer use an interface, as this didn't allow for Shortcodable to be applied to core classes such as File, Member, Page etc without changing core code. Instead, Shortcodable is applied to your Objects via yml config. Some methods have also changed from statics to normal methods. See updated examples below. 
+Shortcodable 2.0 has an improved method for applying Shortcodable to DataObjects. We no longer use an interface, as this didn't allow for Shortcodable to be applied to core classes such as File, Member, Page etc without changing core code. Instead, Shortcodable is applied to your Objects via yml config. Some methods have also changed from statics to normal methods. See updated examples below.
 
 ## Requirements
 * SilverStripe 3.1 +
@@ -24,7 +24,9 @@ Clicking the toolbar icon opens a popup that looks like this:
 Note that currently there is a small issue when editing shortcodes. If you want to edit an existing shortcode, just make sure you select the whole thing before clicking the ![icon](https://raw.github.com/sheadawson/silverstripe-shortcodable/master/images/shortcodable.png) icon.
 ## API Usage
 
-Configure the Objects you'd like to make Shortcodable via yml config. This automatically registers the object with SilverStripe's shortcode parser and the Shortcodable module. In this example we'll create a shortcodable Image Gallery.
+Configure the Classes you'd like to make Shortcodable via yml config. This automatically registers the Class with SilverStripe's shortcode parser and the Shortcodable module. In this example we'll create a shortcodable Image Gallery.
+
+### Register Shortcodable Classes
 
 ```
 Shortcodable:
@@ -32,7 +34,11 @@ Shortcodable:
     - ImageGallery
 ```
 
-Objects registered with Shortcodable must have the parseShortcode pulbic method defined (either directly on the class or via an Extension). This method is responsible for transforming and rendering the shortcode in the frontend. Because ImageGallery extends DataObject, the id attribute field is automatically added to the shortcode form. The following example code checks if the shortcode's "id" argument has been set and is valid, collects relevant data from the shortcode's other attributes and renders the ImageGallery with the appropriate template.
+### Your Shortcodable class
+
+Classes registered with Shortcodable must have the parseShortcode public method defined (either directly on the class or via an Extension). This method is responsible for transforming and rendering the shortcode in the frontend.
+
+Because ImageGallery extends DataObject, the id attribute field is automatically added to the shortcode form. The following example code checks if the shortcode's "id" argument has been set and is valid, collects relevant data from the shortcode's other attributes and renders the ImageGallery with the appropriate template.
 
 ```php
 class ImageGallery extends DataObject
