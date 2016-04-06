@@ -36,7 +36,7 @@ Shortcodable:
 
 ### Your Shortcodable class
 
-Classes registered with Shortcodable must have the parse_shortcode public method defined (either directly on the class or via an Extension). This method is responsible for transforming and rendering the shortcode in the frontend.
+Classes registered with Shortcodable must have the parse_shortcode public static method defined (either directly on the class or via an Extension). This method is responsible for transforming and rendering the shortcode in the frontend.
 
 Because ImageGallery extends DataObject, the id attribute field is automatically added to the shortcode form. The following example code checks if the shortcode's "id" argument has been set and is valid, collects relevant data from the shortcode's other attributes and renders the ImageGallery with the appropriate template.
 
