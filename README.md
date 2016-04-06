@@ -36,7 +36,7 @@ Shortcodable:
 
 ### Your Shortcodable class
 
-Classes registered with Shortcodable must have the parseShortcode public method defined (either directly on the class or via an Extension). This method is responsible for transforming and rendering the shortcode in the frontend.
+Classes registered with Shortcodable must have the parse_shortcode public method defined (either directly on the class or via an Extension). This method is responsible for transforming and rendering the shortcode in the frontend.
 
 Because ImageGallery extends DataObject, the id attribute field is automatically added to the shortcode form. The following example code checks if the shortcode's "id" argument has been set and is valid, collects relevant data from the shortcode's other attributes and renders the ImageGallery with the appropriate template.
 
@@ -53,7 +53,7 @@ class ImageGallery extends DataObject
      *
      * @return string
      **/
-    public static function parseShortcode($arguments, $content, $parser, $shortcode)
+    public static function parse_shortcode($arguments, $content, $parser, $shortcode)
     {
         // check the gallery exists
         if(isset($arguments['id']) && $gallery = ImageGallery::get()->byID($arguments['id'])) {
@@ -96,7 +96,7 @@ class ImageGallery extends DataObject
 
 Create the ImageGallery.ss template then that's it, done!
 
-### Restricting data object selection
+## Restricting data object selection
 
 If you would like to customise or filter the list of available shortcodable DataObject records available in the dropdown, you can supply a custom getShortcodableRecords method on your shortcodable DataObject. The method should return an associative array suitable for the DropdownField. For example:
 
