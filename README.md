@@ -34,14 +34,13 @@ Shortcodable:
     - ImageGallery
 ```
 
-### Enable TinyMCE plugin
+### Enable TinyMCE plugin for any additional HTMLEditorField types (optional)
 
-Enable Shortcodable plugin for TinyMCE via yml config.
+Enable Shortcodable plugin for additional HTMLEditorField types via yml config.
 
 ```
 Shortcodable:
   htmleditor_names:
-    - cms
     - cwp
 ```
 
