@@ -34,6 +34,17 @@ Shortcodable:
     - ImageGallery
 ```
 
+### Enable TinyMCE plugin
+
+Enable Shortcodable plugin for TinyMCE via yml config.
+
+```
+Shortcodable:
+  htmleditor_names:
+    - cms
+    - cwp
+```
+
 ### Your Shortcodable class
 
 Classes registered with Shortcodable must have the parse_shortcode public static method defined (either directly on the class or via an Extension). This method is responsible for transforming and rendering the shortcode in the frontend.
