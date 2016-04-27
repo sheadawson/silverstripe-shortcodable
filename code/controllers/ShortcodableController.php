@@ -11,6 +11,7 @@ class ShortcodableController extends Controller
      */
     private static $allowed_actions = array(
         'ShortcodeForm',
+        'shortcodePlaceHolder',
     );
 
     /**
@@ -88,6 +89,11 @@ class ShortcodableController extends Controller
                         $fields->push(CompositeField::create($attrFields)->addExtraClass('attributes-composite'));
                     }
                 }
+                if (singleton($classname)->hasMethod('getShortcodePlaceHolder')) {
+                    $fields->push(CompositeField::create(array(
+                        HiddenField::create('HasPlaceholder', '', 1)
+                    ))->addExtraClass('attributes-composite'));
+                }
             }
         }
 
@@ -111,5 +117,22 @@ class ShortcodableController extends Controller
         $this->extend('updateShortcodeForm', $form);
 
         return $form;
+    }
+
+    /**
+     * Generates shortcode placeholder to display inside TinyMCE instead of the shortcode.
+     *
+     * @return void
+     */
+    public function shortcodePlaceHolder()
+    {
+        if (!Permission::check('CMS_ACCESS_CMSMain')) {
+            return;
+        }
+
+        $classname = $this->request->param('OtherID');
+        if (singleton($classname)->hasMethod('getShortcodePlaceHolder')) {
+            return singleton($classname)->getShortcodePlaceHolder();
+        }
     }
 }

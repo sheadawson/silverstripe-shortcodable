@@ -113,7 +113,11 @@
 				this.reloadForm('shortcode', shortcode)
 			},
 			getCurrentShortcode: function() {
-				return $(this.getSelection()).text();
+				var selection = $(this.getSelection()), selectionText = selection.text();
+				if (selection.attr('title') !== undefined) {
+					return '[' + selection.attr('title') + ']';
+				}
+				return selectionText;
 			}
 		});
 	});
