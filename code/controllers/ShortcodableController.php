@@ -30,7 +30,7 @@ class ShortcodableController extends Controller
         $classList = ShortCodable::get_shortcodable_classes();
         $classes = array();
         foreach ($classList as $class) {
-            $classes[$class] = singleton($class)->hasMethod('singular_name') ? singleton($class)->singular_name() : $class;
+            $classes[$class] = singleton($class)->hasMethod('getShortcodeNiceName') ? singleton($class)->getShortcodeNiceName() : (singleton($class)->hasMethod('singular_name') ? singleton($class)->singular_name() : $class);
         }
 
         // load from the currently selected ShortcodeType or Shortcode data
@@ -62,8 +62,8 @@ class ShortcodableController extends Controller
                 )
             )->addExtraClass('CompositeField composite cms-content-header nolabel'),
             LiteralField::create('shortcodablefields', '<div class="ss-shortcodable content">'),
-            DropdownField::create('ShortcodeType', 'ShortcodeType', $classes, $classname)
-                ->setHasEmptyDefault(true)
+            DropdownField::create('ShortcodeType', 'Shortcode type', $classes, $classname)
+                ->setHasEmptyDefault(true)->setEmptyString('--- select one ---')
                 ->addExtraClass('shortcode-type'),
 
         ));
@@ -80,7 +80,7 @@ class ShortcodableController extends Controller
                     }
                     $fields->push(
                         DropdownField::create('id', $class->singular_name(), $dataObjectSource)
-                            ->setHasEmptyDefault(true)
+                            ->setHasEmptyDefault(true)->setEmptyString('--- select one ---')
                     );
                 }
                 if (singleton($classname)->hasMethod('getShortcodeFields')) {
@@ -88,6 +88,11 @@ class ShortcodableController extends Controller
                         $fields->push(CompositeField::create($attrFields)->addExtraClass('attributes-composite'));
                     }
                 }
+                $kw = $classname;
+                if (singleton($classname)->hasMethod('getShortcodeKeyword')) {
+                    $kw = singleton($classname)->getShortcodeKeyword();
+                }
+                $fields->push(HiddenField::create('ShortcodeKeyword', '', $kw));
             }
         }
 

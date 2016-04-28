@@ -24,8 +24,12 @@ class Shortcodable extends Object
             if (!singleton($class)->hasMethod('parse_shortcode')) {
                 user_error("Failed to register \"$class\" with shortcodable. $class must have the method parse_shortcode(). See /shortcodable/README.md", E_USER_ERROR);
             }
-            ShortcodeParser::get('default')->register($class, array($class, 'parse_shortcode'));
-            singleton('ShortcodableParser')->register($class);
+            $kw = $class;
+            if (singleton($class)->hasMethod('getShortcodeKeyword')) {
+                $kw = singleton($class)->getShortcodeKeyword();
+            }
+            ShortcodeParser::get('default')->register($kw, array($class, 'parse_shortcode'));
+            singleton('ShortcodableParser')->register($kw);
         }
     }
 
