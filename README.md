@@ -106,6 +106,30 @@ class ImageGallery extends DataObject
 
 Create the ImageGallery.ss template then that's it, done!
 
+### Custom shortcode names
+
+You can specify a name that will appear in the modal dropdown when inserting shortcode through TinyMCE.
+Following code would e.g. change the name from *CustomSectionsContentBlock* to *Content block with custom sections*.
+
+```php
+public function getShortcodeNiceName()
+{
+    return 'Content block with custom sections';
+}
+```
+
+You can as well change the actual shortcode (keyword) that will appear in the wysiwyg editor.
+Stick this function into your shortcodable dataobject and the output will look like *[Sections_ContentBlock id=""]*
+
+```php
+public function getShortcodeKeyword()
+{
+    return 'Sections_ContentBlock';
+}
+```
+
+**TODO**: Enable changing this via config YAML files.
+
 ## Restricting data object selection
 
 If you would like to customise or filter the list of available shortcodable DataObject records available in the dropdown, you can supply a custom getShortcodableRecords method on your shortcodable DataObject. The method should return an associative array suitable for the DropdownField. For example:

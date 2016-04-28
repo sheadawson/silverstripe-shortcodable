@@ -59,7 +59,7 @@
 			// get the html to insert
 			getHTML: function(){
 				var data = this.getAttributes();
-				var html = data.shortcodeType;
+				var html = data.shortcodeKeyword;
 
 				for (var key in data.attributes) {
 				    html += ' ' + key + '="' + data.attributes[key] + '"';
@@ -71,6 +71,7 @@
 			// get shortcode attributes from shortcode form
 			getAttributes: function() {
 				var attributes = {};
+                var shortcodeKeyword = this.find(':input[name=ShortcodeKeyword]').val();
 				var shortcodeType = this.find(':input[name=ShortcodeType]').val();
 				var id = this.find(':input[name=id]').val();
 				if (id) {
@@ -91,7 +92,8 @@
 				}
 
 				return {
-					'shortcodeType' : this.find(':input[name=ShortcodeType]').val(),
+					'shortcodeType' : shortcodeType,
+                    'shortcodeKeyword' : shortcodeKeyword,
 					'attributes' : attributes
 				};
 			},
