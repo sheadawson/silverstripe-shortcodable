@@ -33,4 +33,15 @@ class Shortcodable extends Object
     {
         return Config::inst()->get('Shortcodable', 'shortcodable_classes');
     }
+
+    public static function get_shortcodable_classes_with_placeholders()
+    {
+        $classes = array();
+        foreach (self::get_shortcodable_classes() as $class) {
+            if (singleton($class)->hasMethod('getShortcodePlaceHolder')) {
+                $classes[] = $class;
+            }
+        }
+        return $classes;
+    }
 }

@@ -19,7 +19,10 @@
 		$('textarea.htmleditor').entwine({
 			openShortcodeDialog: function() {
 				this.openDialog('shortcode');
-			}
+			},
+            getPlaceholderClasses: function() {
+                return $(this).data('placeholderclasses').split(',');
+            }
 		});
 
 		$('form.htmleditorfield-shortcodable').entwine({

@@ -124,15 +124,37 @@ class ShortcodableController extends Controller
      *
      * @return void
      */
-    public function shortcodePlaceHolder()
+    public function shortcodePlaceHolder($request)
     {
         if (!Permission::check('CMS_ACCESS_CMSMain')) {
             return;
         }
 
-        $classname = $this->request->param('OtherID');
-        if (singleton($classname)->hasMethod('getShortcodePlaceHolder')) {
-            return singleton($classname)->getShortcodePlaceHolder();
+        $classname = $request->param('ID');
+        $id = $request->param('OtherID');
+
+        if (!class_exists($classname)) {
+            return;
+        }
+
+        if ($id) {
+            $object = $classname::get()->byID($id);
+        } else {
+            $object = singleton($classname);
+        }
+
+        if ($object->hasMethod('getShortcodePlaceHolder')) {
+            $attributes = null;
+            if ($shortcode = $request->requestVar('Shortcode')) {
+                $shortcode = str_replace("\xEF\xBB\xBF", '', $shortcode); //remove BOM inside string on cursor position...
+                $shortcodeData = singleton('ShortcodableParser')->the_shortcodes(array(), $shortcode);
+                if (isset($shortcodeData[0])) {
+                    $attributes = $shortcodeData[0]['atts'];
+                }
+            }
+
+            $link = $object->getShortcodePlaceholder($attributes);
+            return $this->redirect($link);
         }
     }
 }

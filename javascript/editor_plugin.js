@@ -1,10 +1,5 @@
 (function () {
     if (typeof tinymce !== 'undefined') {
-        // Replace placeholder image with the shortcode.
-        function getAttribute(string, attr) {
-            attr = new RegExp(attr + '=\"([^\"]+)\"', 'g').exec(string);
-            return attr ? tinymce.DOM.decode(attr[1]) : '';
-        }
 
         tinymce.create('tinymce.plugins.shortcodable', {
             getInfo: function () {
@@ -18,7 +13,8 @@
             },
 
             init: function (ed, url) {
-                var me = this;
+                var me = tinyMCE.activeEditor.plugins.shortcodable;
+
                 ed.addButton('shortcodable', {
                     title: 'Insert Shortcode',
                     cmd: 'shortcodable',
@@ -31,19 +27,19 @@
 
                 // On load replace shorcode with placeholder.
                 ed.onBeforeSetContent.add(function (ed, o) {
-                    o.content = me._showPlaceholder(o.content);
+                    o.content = me._replaceShortcodesWithPlaceholders(o.content, ed);
                 });
 
                 // On insert replace shortcode with placeholder.
                 ed.onExecCommand.add(function (ed, cmd, ui, val) {
                     if (cmd === 'mceInsertContent') {
-                        ed.setContent(me._showPlaceholder(ed.getContent()));
+                        ed.setContent(me._replaceShortcodesWithPlaceholders(ed.getContent(), ed));
                     }
                 });
 
                 // On save replace placeholder with shortcode.
                 ed.onPostProcess.add(function (e, o) {
-                    o.content = me._getShortcode(o.content);
+                    o.content = me._replacePlaceholdersWithShortcodes(o.content, ed);
                 });
 
                 ed.onDblClick.add(function (ed, e) {
@@ -53,24 +49,28 @@
                     }
                 });
             },
-            // Replace shortcode with a placeholder.
-            _showPlaceholder: function (co) {
-                return co.replace(/\[([a-z]+)\s+([^\]]*)\]/gi, function (found, name, params) {
-                    var id = getAttribute(params, 'id');
-                    var hasPlaceholder = getAttribute(params, 'HasPlaceholder');
-                    if (hasPlaceholder == 1) {
+
+            // replace shortcode strings with placeholder images
+            _replaceShortcodesWithPlaceholders: function (content, editor) {
+                var plugin = tinyMCE.activeEditor.plugins.shortcodable;
+                var placeholderClasses = jQuery('#' + editor.id).entwine('ss').getPlaceholderClasses();
+                return content.replace(/\[([a-z]+)\s+([^\]]*)\]/gi, function (found, name, params) {
+                    var id = plugin.getAttribute(params, 'id');
+                    if (placeholderClasses.indexOf(name) != -1) {
+                        var src = encodeURI('ShortcodableController/shortcodePlaceHolder/' + name + '/' + id + '?Shortcode=[' + name + ' ' + params + ']');
                         var img = jQuery('<img/>')
                             .attr('class', 'shortcode-placeholder mceItem')
                             .attr('title', name + ' ' + params)
-                            .attr('src', 'ShortcodableController/shortcodePlaceHolder/' + id + '/' + name);
+                            .attr('src', src);
                         return img.prop('outerHTML');
                     }
 
                     return found;
                 });
             },
-            // Get the shortcode from the placeholder.
-            _getShortcode: function (co) {
+
+            // replace placeholder tags with shortcodes
+            _replacePlaceholdersWithShortcodes: function (co) {
                 var content = jQuery(co);
                 content.find('.shortcode-placeholder').each(function () {
                     var el = jQuery(this);
@@ -84,6 +84,12 @@
                     }
                 });
                 return originalContent;
+            },
+
+            // get an attribute from a shortcode string by it's key
+            getAttribute: function (string, key) {
+                var attr = new RegExp(key + '=\"([^\"]+)\"', 'g').exec(string);
+                return attr ? tinymce.DOM.decode(attr[1]) : '';
             }
         });
 
