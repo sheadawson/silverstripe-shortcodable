@@ -14,7 +14,7 @@ composer require sheadawson/silverstripe-shortcodable
 ```
 
 ## Configuration
-See [this gist](https://gist.github.com/sheadawson/12c5e5a2b42272bd90f703941450d677) for a well documented example of a Shortcodable ImageGallery toget you started.
+See [this gist](https://gist.github.com/sheadawson/12c5e5a2b42272bd90f703941450d677) for a well documented example of a Shortcodable ImageGallery to get you started.
 
 ## CMS Usage
 Once installed a new icon will appear in the CMS HTMLEditor toolbar. It looks like this:
