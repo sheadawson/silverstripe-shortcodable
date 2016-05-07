@@ -14,7 +14,7 @@ composer require sheadawson/silverstripe-shortcodable
 ```
 
 ## Configuration
-See [this gist](https://gist.github.com/sheadawson/12c5e5a2b42272bd90f703941450d677) for a well documented example of a Shortcodable ImageGallery to get you started.
+See [this gist](https://gist.github.com/sheadawson/12c5e5a2b42272bd90f703941450d677) for a well documented example of a Shortcodable ImageGallery to get you started. This example is for a subclass of DataObject. If your shortcodable object doesn't need it's own database record, you can use the same example but use ViewableData as the parent class.
 
 ## CMS Usage
 Once installed a new icon will appear in the CMS HTMLEditor toolbar. It looks like this:
