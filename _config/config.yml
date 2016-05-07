@@ -4,10 +4,16 @@ LeftAndMain:
     - 'shortcodable/javascript/shortcodable.js'
   extra_requirements_css:
     - 'shortcodable/css/shortcodable.css'
+
 Director:
   rules:
     ShortcodableController: ShortcodableController
+
 Shortcodable:
   htmleditor_names:
     - cms
+
+HtmlEditorField:
+  extensions:
+    - ShortcodableHtmlEditorField
 
