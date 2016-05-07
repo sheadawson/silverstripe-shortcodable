@@ -6,7 +6,7 @@ class ShortcodableHtmlEditorField extends Extension
     {
         $this->owner->setAttribute(
             'data-placeholderclasses',
-            implode(',',Shortcodable::get_shortcodable_classes_with_placeholders())
+            implode(',', Shortcodable::get_shortcodable_classes_with_placeholders())
         );
     }
 }

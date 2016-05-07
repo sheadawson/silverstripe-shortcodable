@@ -21,4 +21,3 @@ if (is_array($htmlEditorNames)) {
 // register classes added via yml config
 $classes = Config::inst()->get('Shortcodable', 'shortcodable_classes');
 Shortcodable::register_classes($classes);
-
