@@ -89,11 +89,6 @@ class ShortcodableController extends Controller
                         $fields->push(CompositeField::create($attrFields)->addExtraClass('attributes-composite'));
                     }
                 }
-                if (singleton($classname)->hasMethod('getShortcodePlaceHolder')) {
-                    $fields->push(CompositeField::create(array(
-                        HiddenField::create('HasPlaceholder', '', 1)
-                    ))->addExtraClass('attributes-composite'));
-                }
             }
         }
 

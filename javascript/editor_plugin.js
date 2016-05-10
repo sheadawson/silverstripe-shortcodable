@@ -54,7 +54,7 @@
             _replaceShortcodesWithPlaceholders: function (content, editor) {
                 var plugin = tinyMCE.activeEditor.plugins.shortcodable;
                 var placeholderClasses = jQuery('#' + editor.id).entwine('ss').getPlaceholderClasses();
-                return content.replace(/\[([a-z]+)\s+([^\]]*)\]/gi, function (found, name, params) {
+                return content.replace(/\[([a-z]+)\s*([^\]]*)\]/gi, function (found, name, params) {
                     var id = plugin.getAttribute(params, 'id');
                     if (placeholderClasses.indexOf(name) != -1) {
                         var src = encodeURI('ShortcodableController/shortcodePlaceHolder/' + name + '/' + id + '?Shortcode=[' + name + ' ' + params + ']');
