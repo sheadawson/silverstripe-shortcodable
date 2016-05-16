@@ -21,7 +21,10 @@
 				this.openDialog('shortcode');
 			},
             getPlaceholderClasses: function() {
-                return $(this).data('placeholderclasses').split(',');
+                var classes = $(this).data('placeholderclasses');
+                if (classes) {
+                    return classes.split(',');
+                }
             }
 		});
 
