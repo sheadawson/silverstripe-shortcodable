@@ -91,11 +91,12 @@
                 if (attributesComposite.length) {
                     attributesComposite.find(":input").each(function(){
                         var attributeField = $(this);
-                        if(attributeField.val() !== ''){
+                        var attributeVal = attributeField.val();
+                        if(attributeVal !== ''){
                             if(attributeField.is('.checkbox')) {
                                 attributes[attributeField.prop('name')] = attributeField.is(':checked') ? 1 : 0;
                             } else {
-                                attributes[attributeField.prop('name')] = attributeField.val();
+                                attributes[attributeField.prop('name')] = attributeVal;
                             }
                         }
                     });

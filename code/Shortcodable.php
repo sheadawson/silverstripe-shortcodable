@@ -34,6 +34,20 @@ class Shortcodable extends Object
         return Config::inst()->get('Shortcodable', 'shortcodable_classes');
     }
 
+    public static function get_shortcodable_classes_fordropdown()
+    {
+        $classList = self::get_shortcodable_classes();
+        $classes = array();
+        foreach ($classList as $class) {
+            if (singleton($class)->hasMethod('singular_name')) {
+                $classes[$class] = singleton($class)->singular_name();
+            } else {
+                $classes[$class] = $class;
+            }
+        }
+        return $classes;
+    }
+
     public static function get_shortcodable_classes_with_placeholders()
     {
         $classes = array();
