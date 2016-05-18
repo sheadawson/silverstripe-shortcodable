@@ -87,21 +87,38 @@
                 if (id) {
                     attributes['id'] = id;
                 }
+                var data = JSON.stringify(this.serializeArray());
+
                 var attributesComposite = this.find('.attributes-composite');
                 if (attributesComposite.length) {
                     attributesComposite.find(":input").each(function(){
                         var attributeField = $(this);
                         var attributeVal = attributeField.val();
+                        var attributeName = attributeField.prop('name');
+
+                        if(attributeField.is('.checkbox') && !attributeField.is(':checked')) {
+                            return true; // skip unchecked checkboxes
+                        }
+
                         if(attributeVal !== ''){
-                            if(attributeField.is('.checkbox')) {
-                                attributes[attributeField.prop('name')] = attributeField.is(':checked') ? 1 : 0;
+                            if (attributeName.indexOf('[') > -1) {
+                                var key = attributeName.substring(0, attributeName.indexOf('['));
+                                if (typeof attributes[key] != 'undefined') {
+                                    attributes[key] += ',' + attributeVal;
+                                } else {
+                                    attributes[key] = attributeVal;
+                                }
                             } else {
-                                attributes[attributeField.prop('name')] = attributeVal;
+                                if(attributeField.is('.checkbox')) {
+                                    attributes[attributeField.prop('name')] = attributeField.is(':checked') ? 1 : 0;
+                                } else {
+                                    attributes[attributeField.prop('name')] = attributeVal;
+                                }
                             }
                         }
                     });
                 }
-
+                console.log(attributes);
                 return {
                     'shortcodeType' : this.find(':input[name=ShortcodeType]').val(),
                     'attributes' : attributes

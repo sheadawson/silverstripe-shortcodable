@@ -158,6 +158,7 @@ class ShortcodableController extends LeftAndMain
                     $fields->push(
                         CompositeField::create($attrFields)
                             ->addExtraClass('attributes-composite')
+                            ->setName('AttributesCompositeField')
                     );
                 }
             }
@@ -176,13 +177,20 @@ class ShortcodableController extends LeftAndMain
             ->loadDataFrom($this)
             ->addExtraClass('htmleditorfield-form htmleditorfield-shortcodable cms-dialog-content');
 
-        if ($data = $this->getShortcodeData()) {
-            $form->loadDataFrom($data['atts']);
-        }
-
         $this->extend('updateShortcodeForm', $form);
 
         $fields->push(LiteralField::create('shortcodablefieldsend', '</div>'));
+
+        if ($data = $this->getShortcodeData()) {
+            $form->loadDataFrom($data['atts']);
+
+            // special treatment for setting value of UploadFields
+            foreach ($form->Fields()->dataFields() as $field) {
+                if (is_a($field, 'UploadField') && isset($data['atts'][$field->getName()])) {
+                    $field->setValue(array('Files' => explode(',', $data['atts'][$field->getName()])));
+                }
+            }
+        }
 
         return $form;
     }
