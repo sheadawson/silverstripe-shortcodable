@@ -25,7 +25,18 @@
                 if (classes) {
                     return classes.split(',');
                 }
-            }
+            },
+            /**
+             * Make sure the editor has flushed all it's buffers before the form is submitted.
+             */
+            'from .cms-edit-form': {
+                onbeforesubmitform: function(e) {
+                    var shortcodable = tinyMCE.activeEditor.plugins.shortcodable;
+                    var ed = this.getEditor();
+                    var newContent = shortcodable.replacePlaceholdersWithShortcodes(ed.getContent(), ed);
+                    $(this).val(newContent);
+                }
+            },
         });
 
         $('form.htmleditorfield-shortcodable').entwine({
@@ -60,7 +71,11 @@
                 var shortcode = this.getHTML();
                 if (shortcode.length) {
                     this.modifySelection(function(ed){
+                        var shortcodable = tinyMCE.activeEditor.plugins.shortcodable;
                         ed.replaceContent(shortcode);
+                        var newContent = shortcodable.replaceShortcodesWithPlaceholders(ed.getContent(), ed.getInstance());
+                        console.log(newContent);
+                        ed.setContent(newContent);
                     });
                 }
             },
@@ -118,7 +133,7 @@
                         }
                     });
                 }
-                console.log(attributes);
+
                 return {
                     'shortcodeType' : this.find(':input[name=ShortcodeType]').val(),
                     'attributes' : attributes
