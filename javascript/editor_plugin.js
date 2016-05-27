@@ -26,20 +26,9 @@
                 });
 
                 // On load replace shorcode with placeholder.
-                ed.onBeforeSetContent.add(function (ed, o) {
-                    o.content = me._replaceShortcodesWithPlaceholders(o.content, ed);
-                });
-
-                // On insert replace shortcode with placeholder.
-                ed.onExecCommand.add(function (ed, cmd, ui, val) {
-                    if (cmd === 'mceInsertContent') {
-                        ed.setContent(me._replaceShortcodesWithPlaceholders(ed.getContent(), ed));
-                    }
-                });
-
-                // On save replace placeholder with shortcode.
-                ed.onPostProcess.add(function (e, o) {
-                    o.content = me._replacePlaceholdersWithShortcodes(o.content, ed);
+                ed.onLoadContent.add(function (ed, o) {
+                    var newContent = me.replaceShortcodesWithPlaceholders(o.content, ed);
+                    ed.execCommand('mceSetContent', false, newContent, false);
                 });
 
                 ed.onDblClick.add(function (ed, e) {
@@ -51,7 +40,7 @@
             },
 
             // replace shortcode strings with placeholder images
-            _replaceShortcodesWithPlaceholders: function (content, editor) {
+            replaceShortcodesWithPlaceholders: function (content, editor) {
                 var plugin = tinyMCE.activeEditor.plugins.shortcodable;
                 var placeholderClasses = jQuery('#' + editor.id).entwine('ss').getPlaceholderClasses();
 
@@ -75,7 +64,7 @@
             },
 
             // replace placeholder tags with shortcodes
-            _replacePlaceholdersWithShortcodes: function (co) {
+            replacePlaceholdersWithShortcodes: function (co) {
                 var content = jQuery(co);
                 content.find('.shortcode-placeholder').each(function () {
                     var el = jQuery(this);
