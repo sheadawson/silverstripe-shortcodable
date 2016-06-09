@@ -134,7 +134,7 @@ class ShortcodableController extends LeftAndMain
                 )
             )->addExtraClass('CompositeField composite cms-content-header nolabel'),
             LiteralField::create('shortcodablefields', '<div class="ss-shortcodable content">'),
-            DropdownField::create('ShortcodeType', 'ShortcodeType', $classes, $classname)
+            DropdownField::create('ShortcodeType', _t('Shortcodable.SHORTCODETYPE', 'Shortcode type'), $classes, $classname)
                 ->setHasEmptyDefault(true)
                 ->addExtraClass('shortcode-type')
         ));
