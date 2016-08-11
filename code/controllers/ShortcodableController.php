@@ -6,19 +6,17 @@
  **/
 class ShortcodableController extends LeftAndMain
 {
-    /**
-     * @var string
-     */
-    const URLSegment = 'ShortcodableController';
+    private static $url_segment = 'shortcodes';
+    private static $menu_title = 'Shortcodes';
+    private static $required_permission_codes = 'CMS_ACCESS_AssetAdmin';
 
     /**
      * @var array
      */
     private static $allowed_actions = array(
-        'ShortcodeForm' => 'ADMIN',
-        'index' => 'ADMIN',
-        'handleEdit' => 'ADMIN',
-        'shortcodePlaceHolder' => 'ADMIN'
+        'ShortcodeForm' => 'CMS_ACCESS_AssetAdmin',
+        'handleEdit' => 'CMS_ACCESS_AssetAdmin',
+        'shortcodePlaceHolder' => 'CMS_ACCESS_AssetAdmin'
     );
 
     /**
@@ -47,7 +45,7 @@ class ShortcodableController extends LeftAndMain
      * Get the shortcodable class by whatever means possible.
      * Determine if this is a new shortcode, or editing an existing one.
      */
-    function init()
+    public function init()
     {
         parent::init();
         if ($data = $this->getShortcodeData()) {
@@ -67,12 +65,14 @@ class ShortcodableController extends LeftAndMain
     {
         if ($this->shortcodableclass) {
             return Controller::join_links(
-                self::URLSegment,
+                $this->config()->url_base,
+                $this->config()->url_segment,
                 'edit',
                 $this->shortcodableclass
             );
         }
-        return Controller::join_links(self::URLSegment, $action);
+
+        return Controller::join_links($this->config()->url_base, $this->config()->url_segment, $action);
     }
 
     /**
@@ -90,15 +90,15 @@ class ShortcodableController extends LeftAndMain
      */
     protected function getShortcodeData()
     {
-        if($this->shortcodedata){
+        if ($this->shortcodedata) {
             return $this->shortcodedata;
         }
         $data = false;
-        if($shortcode = $this->request->requestVar('Shortcode')){
+        if ($shortcode = $this->request->requestVar('Shortcode')) {
             //remove BOM inside string on cursor position...
             $shortcode = str_replace("\xEF\xBB\xBF", '', $shortcode);
             $data = singleton('ShortcodableParser')->the_shortcodes(array(), $shortcode);
-            if(isset($data[0])){
+            if (isset($data[0])) {
                 $this->shortcodedata = $data[0];
                 return $this->shortcodedata;
             }
@@ -119,7 +119,7 @@ class ShortcodableController extends LeftAndMain
         if ($this->isnew) {
             $headingText = _t('Shortcodable.EDITSHORTCODE', 'Edit Shortcode');
         } else {
-            $headingText =  sprintf(
+            $headingText = sprintf(
                 _t('Shortcodable.EDITSHORTCODE', 'Edit %s Shortcode'),
                 singleton($this->shortcodableclass)->singular_name()
             );
@@ -169,7 +169,7 @@ class ShortcodableController extends LeftAndMain
             FormAction::create('insert', _t('Shortcodable.BUTTONINSERTSHORTCODE', 'Insert shortcode'))
                 ->addExtraClass('ss-ui-action-constructive')
                 ->setAttribute('data-icon', 'accept')
-                ->setUseButtonTag(true),
+                ->setUseButtonTag(true)
         ));
 
         // form
