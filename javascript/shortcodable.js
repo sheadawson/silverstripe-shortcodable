@@ -33,7 +33,7 @@
                 onbeforesubmitform: function(e) {
                     var shortcodable = tinyMCE.activeEditor.plugins.shortcodable;
                     var ed = this.getEditor();
-                    var newContent = shortcodable.replacePlaceholdersWithShortcodes(ed.getContent(), ed);
+                    var newContent = shortcodable.replacePlaceholdersWithShortcodes($(this).val(), ed);
                     $(this).val(newContent);
                 }
             },
