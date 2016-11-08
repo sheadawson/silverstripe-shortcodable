@@ -17,3 +17,6 @@ HtmlEditorField:
   extensions:
     - ShortcodableHtmlEditorField
 
+ShortcodeParser:
+  extensions:
+    - ShortcodableShortcodeParserExtension
