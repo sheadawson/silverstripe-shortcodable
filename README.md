@@ -7,7 +7,9 @@
 Provides a GUI for CMS users to insert Shortcodes into the HTMLEditorField + an API for developers to define Shortcodable DataObjects and Views. This allows CMS users to easily embed and customise DataObjects and templated HTML snippets anywhere amongst their page content. Shortcodes can optionally be represented in the WYSIWYG with a custom placeholder image.
 
 ## Requirements
-* SilverStripe 3.1 +
+* SilverStripe 3.5 +
+
+See 2.x branch/releases for SilverStripe 3.1 - 3.4 compatibility
 
 ## Installation
 Install via composer, run dev/build
@@ -38,4 +40,3 @@ Double clicking a shortcode placeholder in the editor will also open the popup t
 
 ## Upgrading from 1.x
 Shortcodable 2.0 has an improved method for applying Shortcodable to DataObjects. We no longer use an interface, as this didn't allow for Shortcodable to be applied to core classes such as File, Member, Page etc without changing core code. Instead, Shortcodable is applied to your Objects via yml config. Some methods have also changed from statics to normal methods. See updated examples below.
-
