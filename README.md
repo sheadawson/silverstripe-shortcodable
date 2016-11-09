@@ -18,6 +18,14 @@ composer require sheadawson/silverstripe-shortcodable
 ## Configuration
 See [this gist](https://gist.github.com/sheadawson/12c5e5a2b42272bd90f703941450d677) for a well documented example of a Shortcodable ImageGallery to get you started. This example is for a subclass of DataObject. If your shortcodable object doesn't need it's own database record, you can use the same example but use ViewableData as the parent class.
 
+#### TinyMCE block elements
+In SilverStripe 3 shortcodes tend to get wrapped in paragraph elements, which is a problem if your shortcode will be rendered as a block element. To get around this you can flag shortcodable classes as block elements with a config setting.
+
+```yml
+MyShortcodableClass:
+  shortcodable_is_block: true
+```
+
 ## CMS Usage
 Once installed a new icon will appear in the CMS HTMLEditor toolbar. It looks like this:
 ![icon](https://raw.github.com/sheadawson/silverstripe-shortcodable/master/images/shortcodable.png)

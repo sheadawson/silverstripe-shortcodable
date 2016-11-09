@@ -15,7 +15,7 @@
     ],
     "require": {
         "composer/installers": "*",
-        "silverstripe/framework": ">=3.1"
+        "silverstripe/framework": "^3.5"
     },
     "support": {
         "issues": "https://github.com/sheadawson/silverstripe-shortcodable/issues"
