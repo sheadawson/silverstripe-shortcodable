@@ -8,15 +8,15 @@ class ShortcodableController extends LeftAndMain
 {
     private static $url_segment = 'shortcodes';
     private static $menu_title = 'Shortcodes';
-    private static $required_permission_codes = 'CMS_ACCESS_AssetAdmin';
+    private static $required_permission_codes = 'CMS_ACCESS_CMSMain';
 
     /**
      * @var array
      */
     private static $allowed_actions = array(
-        'ShortcodeForm' => 'CMS_ACCESS_AssetAdmin',
-        'handleEdit' => 'CMS_ACCESS_AssetAdmin',
-        'shortcodePlaceHolder' => 'CMS_ACCESS_AssetAdmin'
+        'ShortcodeForm' => 'CMS_ACCESS_CMSMain',
+        'handleEdit' => 'CMS_ACCESS_CMSMain',
+        'shortcodePlaceHolder' => 'CMS_ACCESS_CMSMain'
     );
 
     /**
