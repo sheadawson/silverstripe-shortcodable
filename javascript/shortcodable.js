@@ -35,6 +35,7 @@
                     var ed = this.getEditor();
                     var newContent = shortcodable.replacePlaceholdersWithShortcodes($(this).val(), ed);
                     $(this).val(newContent);
+                    ed.save();
                 }
             },
         });
