@@ -21,11 +21,12 @@ composer require sheadawson/silverstripe-shortcodable
 See [this gist](https://gist.github.com/sheadawson/12c5e5a2b42272bd90f703941450d677) for a well documented example of a Shortcodable ImageGallery to get you started. This example is for a subclass of DataObject. If your shortcodable object doesn't need it's own database record, you can use the same example but use ViewableData as the parent class.
 
 #### TinyMCE block elements
-In SilverStripe 3 shortcodes tend to get wrapped in paragraph elements, which is a problem if your shortcode will be rendered as a block element. To get around this you can flag shortcodable classes as block elements with a config setting.
+In SilverStripe 3 shortcodes tend to get wrapped in paragraph elements, which is a problem if your shortcode will be rendered as a block element. To get around this you can flag shortcodable classes as block elements with a config setting. If you don't want to replace the paragraph tag with a div this can be disabled as well.
 
 ```yml
 MyShortcodableClass:
   shortcodable_is_block: true
+  disable_wrapper: true
 ```
 
 ## CMS Usage
