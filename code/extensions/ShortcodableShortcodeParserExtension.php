@@ -13,10 +13,15 @@ class ShortcodableShortcodeParserExtension extends Extension
                 $shortcodeName = $matches[3];
                 // Since we're only concerned with shortcodable objects we know the
                 // shortcode name will be the class name so don't have to look it up
-                return ($shortcodeName && $parser->registered($shortcodeName)
-                    && Config::inst()->get($shortcodeName, 'shortcodable_is_block'))
-                    ? "<div$matches[1]>[$matches[2]]</div>"
-                    : $matches[0];
+                if ($shortcodeName && $parser->registered($shortcodeName)) {
+                    if (Config::inst()->get($shortcodeName, 'shortcodable_is_block') && Config::inst()->get($shortcodeName, 'disable_wrapper')) {
+                        return "[$matches[2]]";  
+                    }
+                    if (Config::inst()->get($shortcodeName, 'shortcodable_is_block')) {
+                        return "<div$matches[1]>[$matches[2]]</div>";  
+                    }
+                }
+                return $matches[0];
             },
             $content
         );
