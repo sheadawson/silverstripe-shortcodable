@@ -7,7 +7,7 @@ LeftAndMain:
 
 Director:
   rules:
-    ShortcodableController: ShortcodableController
+    'admin/shortcodes': ShortcodableController
 
 Shortcodable:
   htmleditor_names:

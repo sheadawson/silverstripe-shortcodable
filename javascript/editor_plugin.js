@@ -48,7 +48,7 @@
                     return content.replace(/\[([a-z]+)\s*([^\]]*)\]/gi, function (found, name, params) {
                         var id = plugin.getAttribute(params, 'id');
                         if (placeholderClasses.indexOf(name) != -1) {
-                            var src = encodeURI('ShortcodableController/shortcodePlaceHolder/' + name + '/' + id + '?Shortcode=[' + name + ' ' + params + ']');
+                            var src = encodeURI('admin/shortcodes/shortcodePlaceHolder/' + name + '/' + id + '?Shortcode=[' + name + ' ' + params + ']');
                             var img = jQuery('<img/>')
                                 .attr('class', 'shortcode-placeholder mceItem')
                                 .attr('title', name + ' ' + params)
