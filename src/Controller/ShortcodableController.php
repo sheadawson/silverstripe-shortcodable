@@ -1,4 +1,20 @@
 <?php
+
+namespace Silverstripe\Shortcodable\Controller;
+
+use Silverstripe\Shortcodable;
+use SilverStripe\Admin\LeftAndMain;
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\CompositeField;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\FormAction;
+use SilverStripe\Forms\Form;
+use SilverStripe\Security\Permission;
+
 /**
  * ShortcodableController.
  *
@@ -78,7 +94,7 @@ class ShortcodableController extends LeftAndMain
     /**
      * handleEdit
      */
-    public function handleEdit(SS_HTTPRequest $request)
+    public function handleEdit(HTTPRequest $request)
     {
         $this->shortcodableclass = $request->param('ShortcodeType');
         return $this->handleAction($request, $action = $request->param('Action'));
@@ -97,7 +113,7 @@ class ShortcodableController extends LeftAndMain
         if($shortcode = $this->request->requestVar('Shortcode')){
             //remove BOM inside string on cursor position...
             $shortcode = str_replace("\xEF\xBB\xBF", '', $shortcode);
-            $data = singleton('ShortcodableParser')->the_shortcodes(array(), $shortcode);
+            $data = singleton('\Silverstripe\Shortcodable\ShortcodableParser')->the_shortcodes(array(), $shortcode);
             if(isset($data[0])){
                 $this->shortcodedata = $data[0];
                 return $this->shortcodedata;
@@ -223,7 +239,7 @@ class ShortcodableController extends LeftAndMain
             $attributes = null;
             if ($shortcode = $request->requestVar('Shortcode')) {
                 $shortcode = str_replace("\xEF\xBB\xBF", '', $shortcode); //remove BOM inside string on cursor position...
-                $shortcodeData = singleton('ShortcodableParser')->the_shortcodes(array(), $shortcode);
+                $shortcodeData = singleton('\Silverstripe\Shortcodable\ShortcodableParser')->the_shortcodes(array(), $shortcode);
                 if (isset($shortcodeData[0])) {
                     $attributes = $shortcodeData[0]['atts'];
                 }
