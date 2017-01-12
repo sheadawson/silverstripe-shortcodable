@@ -1,4 +1,4 @@
-# SilverStripe Shortcodable 2.0
+# SilverStripe Shortcodable 4
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sheadawson/silverstripe-shortcodable/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sheadawson/silverstripe-shortcodable/?branch=master)
 
@@ -7,9 +7,10 @@
 Provides a GUI for CMS users to insert Shortcodes into the HTMLEditorField + an API for developers to define Shortcodable DataObjects and Views. This allows CMS users to easily embed and customise DataObjects and templated HTML snippets anywhere amongst their page content. Shortcodes can optionally be represented in the WYSIWYG with a custom placeholder image.
 
 ## Requirements
-* SilverStripe 3.5 +
+* SilverStripe 4 +
 
-See 2.x branch/releases for SilverStripe 3.1 - 3.4 compatibility
+See 3.x branch/releases for SilverStripe SS 3.5 compatibility
+See 2.x branch/releases for SilverStripe SS 3.1 - 3.4 compatibility
 
 ## Installation
 Install via composer, run dev/build
