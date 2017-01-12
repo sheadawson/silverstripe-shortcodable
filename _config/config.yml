@@ -1,3 +1,10 @@
+---
+Name: shortcodable
+After:
+    - framework/*
+    - cms/*
+---
+
 LeftAndMain:
   extra_requirements_javascript:
     - 'shortcodable/javascript/editor_plugin.js'
@@ -5,9 +12,9 @@ LeftAndMain:
   extra_requirements_css:
     - 'shortcodable/css/shortcodable.css'
 
-Director:
+SilverStripe\Control\Director:
   rules:
-    ShortcodableController: ShortcodableController
+    ShortcodableController: Silverstripe\Shortcodable\Controller\ShortcodableController
 
 Shortcodable:
   htmleditor_names:

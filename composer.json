@@ -15,7 +15,12 @@
     ],
     "require": {
         "composer/installers": "*",
-        "silverstripe/framework": "^3.5"
+        "silverstripe/framework": "~4.0.0-alpha3"
+    },
+    "autoload": {
+        "psr-4": {
+            "SilverStripe\\Shortcodable\\": "src/"
+        }
     },
     "support": {
         "issues": "https://github.com/sheadawson/silverstripe-shortcodable/issues"

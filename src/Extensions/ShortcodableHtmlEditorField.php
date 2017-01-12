@@ -1,5 +1,11 @@
 <?php
 
+namespace Silverstripe\Shortcodable;
+
+use SilverStripe\Core\Extension;
+
+use Silverstripe\Shortcodable;
+
 class ShortcodableHtmlEditorField extends Extension
 {
     public function onBeforeRender()

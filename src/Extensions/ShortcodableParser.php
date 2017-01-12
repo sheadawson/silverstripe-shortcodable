@@ -1,4 +1,9 @@
 <?php
+
+namespace Silverstripe\Shortcodable;
+
+use SilverStripe\Core\Object;
+
 /**
  * ShortcodableParser - temporary measure, based on wordpress parser
  * This parser is only used to parse tags in the html editor field for editing in the popup window.

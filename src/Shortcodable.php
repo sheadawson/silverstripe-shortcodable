@@ -1,4 +1,11 @@
 <?php
+
+namespace Silverstripe;
+
+use SilverStripe\Core\Object;
+use SilverStripe\View\Parsers\ShortcodeParser;
+use SilverStripe\Core\Config\Config;
+
 /**
  * Shortcodable
  * Manages shortcodable configuration and register shortcodable objects
@@ -38,11 +45,13 @@ class Shortcodable extends Object
     {
         $classList = self::get_shortcodable_classes();
         $classes = array();
-        foreach ($classList as $class) {
-            if (singleton($class)->hasMethod('singular_name')) {
-                $classes[$class] = singleton($class)->singular_name();
-            } else {
-                $classes[$class] = $class;
+        if (is_array($classList)) {
+            foreach ($classList as $class) {
+                if (singleton($class)->hasMethod('singular_name')) {
+                    $classes[$class] = singleton($class)->singular_name();
+                } else {
+                    $classes[$class] = $class;
+                }
             }
         }
         return $classes;
