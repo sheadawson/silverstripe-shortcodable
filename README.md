@@ -1,4 +1,4 @@
-# SilverStripe Shortcodable 2.0
+# SilverStripe Shortcodable 3.0
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sheadawson/silverstripe-shortcodable/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sheadawson/silverstripe-shortcodable/?branch=master)
 
