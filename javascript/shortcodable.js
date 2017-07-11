@@ -31,6 +31,12 @@
              */
             'from .cms-edit-form': {
                 onbeforesubmitform: function(e) {
+                    // Save the updated content here, rather than _after_ replacing the placeholders
+                    // otherwise you're replacing the shortcode html with the shortcode, then writing
+                    // the html back to the textarea value, overriding what the shortcode conversion
+                    // process has done
+                    this._super(e);
+                    
                     var shortcodable = tinyMCE.activeEditor.plugins.shortcodable;
                     if (shortcodable) {
                         var ed = this.getEditor();
