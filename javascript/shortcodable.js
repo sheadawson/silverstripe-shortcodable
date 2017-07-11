@@ -31,10 +31,18 @@
              */
             'from .cms-edit-form': {
                 onbeforesubmitform: function(e) {
+                     // Save the updated content here, rather than _after_ replacing the placeholders
+                    // otherwise you're replacing the shortcode html with the shortcode, then writing
+                    // the html back to the textarea value, overriding what the shortcode conversion
+                    // process has done
+                    this._super(e);
+
                     var shortcodable = tinyMCE.activeEditor.plugins.shortcodable;
-                    var ed = this.getEditor();
-                    var newContent = shortcodable.replacePlaceholdersWithShortcodes($(this).val(), ed);
-                    $(this).val(newContent);
+                    if (shortcodable) {
+                        var ed = this.getEditor();
+                        var newContent = shortcodable.replacePlaceholdersWithShortcodes($(this).val(), ed);
+                        $(this).val(newContent);
+                    }
                 }
             },
         });
@@ -74,7 +82,7 @@
                         var shortcodable = tinyMCE.activeEditor.plugins.shortcodable;
                         ed.replaceContent(shortcode);
                         var newContent = shortcodable.replaceShortcodesWithPlaceholders(ed.getContent(), ed.getInstance());
-                        console.log(newContent);
+                        // console.log(newContent);
                         ed.setContent(newContent);
                     });
                 }
