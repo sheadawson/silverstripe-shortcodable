@@ -57,6 +57,9 @@
                     postdata.Shortcode = data;
                 }
 
+                // add page ID to postData for filtering based on parent page
+                postdata.PageID = $(location).attr('href').split('?')[0].split('/').splice(-1, 1)[0] || null;
+
                 this.addClass('loading');
 
                 var url = $('#cms-editor-dialogs').attr('data-url-shortcodeform');

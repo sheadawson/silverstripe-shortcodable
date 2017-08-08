@@ -144,7 +144,7 @@ class ShortcodableController extends LeftAndMain
             $class = singleton($classname);
             if (is_subclass_of($class, 'DataObject')) {
                 if (singleton($classname)->hasMethod('getShortcodableRecords')) {
-                    $dataObjectSource = singleton($classname)->getShortcodableRecords();
+                    $dataObjectSource = singleton($classname)->getShortcodableRecords($this->request->requestVar('PageID'));
                 } else {
                     $dataObjectSource = $classname::get()->map()->toArray();
                 }
