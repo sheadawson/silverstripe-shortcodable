@@ -229,7 +229,7 @@ class ShortcodableController extends LeftAndMain
             return;
         }
 
-        if ($id) {
+        if ($id && is_subclass_of($classname, 'DataObject')) {
             $object = $classname::get()->byID($id);
         } else {
             $object = singleton($classname);
