@@ -43,7 +43,7 @@ class ShortcodableParser extends Object
      */
     public function parse_atts($content)
     {
-        $content = preg_match_all('/([^ ]*)=(\'([^\']*)\'|\"([^\"]*)\"|([^ ]*))/', trim($content), $c);
+        $content = preg_match_all('/([^ =]*)=(\'([^\']*)\'|\"([^\"]*)\"|([^ ]*))/', trim($content), $c);
         list($dummy, $keys, $values) = array_values($c);
         $c = array();
         foreach ($keys as $key => $value) {
