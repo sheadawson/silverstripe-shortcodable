@@ -22,19 +22,17 @@ use SilverStripe\Security\Permission;
  **/
 class ShortcodableController extends LeftAndMain
 {
-    /**
-     * @var string
-     */
-    const URLSegment = 'ShortcodableController';
+    private static $url_segment = 'shortcodable';
+    private static $menu_title = 'Shortcodable';
+    private static $required_permission_codes = 'CMS_ACCESS_LeftAndMain';
 
     /**
      * @var array
      */
     private static $allowed_actions = array(
-        'ShortcodeForm' => 'ADMIN',
-        'index' => 'ADMIN',
-        'handleEdit' => 'ADMIN',
-        'shortcodePlaceHolder' => 'ADMIN'
+        'ShortcodeForm' => 'CMS_ACCESS_LeftAndMain',
+        'handleEdit' => 'CMS_ACCESS_LeftAndMain',
+        'shortcodePlaceHolder' => 'CMS_ACCESS_LeftAndMain'
     );
 
     /**
@@ -63,7 +61,7 @@ class ShortcodableController extends LeftAndMain
      * Get the shortcodable class by whatever means possible.
      * Determine if this is a new shortcode, or editing an existing one.
      */
-    function init()
+    public function init()
     {
         parent::init();
         if ($data = $this->getShortcodeData()) {
@@ -83,12 +81,13 @@ class ShortcodableController extends LeftAndMain
     {
         if ($this->shortcodableclass) {
             return Controller::join_links(
-                self::URLSegment,
+                $this->config()->url_base,
+                $this->config()->url_segment,
                 'edit',
                 $this->shortcodableclass
             );
         }
-        return Controller::join_links(self::URLSegment, $action);
+        return Controller::join_links($this->config()->url_base, $this->config()->url_segment, $action);
     }
 
     /**
@@ -185,7 +184,7 @@ class ShortcodableController extends LeftAndMain
             FormAction::create('insert', _t('Shortcodable.BUTTONINSERTSHORTCODE', 'Insert shortcode'))
                 ->addExtraClass('ss-ui-action-constructive')
                 ->setAttribute('data-icon', 'accept')
-                ->setUseButtonTag(true),
+                ->setUseButtonTag(true)
         ));
 
         // form

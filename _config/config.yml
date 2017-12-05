@@ -14,7 +14,7 @@ LeftAndMain:
 
 SilverStripe\Control\Director:
   rules:
-    ShortcodableController: Silverstripe\Shortcodable\Controller\ShortcodableController
+    'admin/shortcodable': Silverstripe\Shortcodable\Controller\ShortcodableController
 
 Shortcodable:
   htmleditor_names:

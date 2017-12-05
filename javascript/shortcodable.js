@@ -11,7 +11,7 @@
         // add shortcode controller url to cms-editor-dialogs
         $('#cms-editor-dialogs').entwine({
             onmatch: function(){
-                this.attr('data-url-shortcodeform', 'ShortcodableController/ShortcodeForm/forTemplate');
+                this.attr('data-url-shortcodeform', 'admin/shortcodable/ShortcodeForm/forTemplate');
             }
         });
 
