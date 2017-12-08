@@ -22,8 +22,7 @@ use SilverStripe\Security\Permission;
  **/
 class ShortcodableController extends LeftAndMain
 {
-    private static $url_segment = 'shortcodable';
-    private static $menu_title = 'Shortcodable';
+    private static $sc_url_segment = 'shortcodable';
     private static $required_permission_codes = 'CMS_ACCESS_LeftAndMain';
 
     /**
@@ -82,12 +81,12 @@ class ShortcodableController extends LeftAndMain
         if ($this->shortcodableclass) {
             return Controller::join_links(
                 $this->config()->url_base,
-                $this->config()->url_segment,
+                $this->config()->sc_url_segment,
                 'edit',
                 $this->shortcodableclass
             );
         }
-        return Controller::join_links($this->config()->url_base, $this->config()->url_segment, $action);
+        return Controller::join_links($this->config()->url_base, $this->config()->sc_url_segment, $action);
     }
 
     /**
