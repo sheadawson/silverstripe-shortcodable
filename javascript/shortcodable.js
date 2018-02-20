@@ -81,19 +81,33 @@
             },
             // get the html to insert
             getHTML: function(){
-                var data = this.getAttributes();
-                var html = data.shortcodeType;
+
+				var data = this.getAttributes();
+				var html = data.shortcodeType;
+                var content = data.attributes['Content'];
+                var shortcode;
 
                 for (var key in data.attributes) {
-                    html += ' ' + key + '="' + data.attributes[key] + '"';
+                    if(key != 'Content') {
+                        html += ' ' + key + '="' + data.attributes[key] + '"';
+                    }
                 }
 
                 if (html.length) {
-                    return "[" + html + "]";
-                } else {
+
+                    if(content) {
+        				shortcode = "[" + html + "]" + data.attributes['Content'] + "[/" + data.shortcodeType + "]";
+                    }else {
+                        shortcode = "[" + html + "]";
+                    }
+
+                    return shortcode;
+
+                }else {
                     return '';
                 }
-            },
+
+			},
             // get shortcode attributes from shortcode form
             getAttributes: function() {
                 var attributes = {};
