@@ -2,7 +2,7 @@
 
 namespace Silverstripe\Shortcodable;
 
-use SilverStripe\Core\Object;
+use SilverStripe\View\ViewableData;
 
 /**
  * ShortcodableParser - temporary measure, based on wordpress parser
@@ -10,7 +10,7 @@ use SilverStripe\Core\Object;
  *
  * @todo update SS ShortcodeParser to offer a public api for converting a shortcode to a data array, and use that instead.
  */
-class ShortcodableParser extends Object
+class ShortcodableParser extends ViewableData
 {
     /**
      * @var array

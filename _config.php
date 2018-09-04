@@ -15,9 +15,9 @@ if (SHORTCODABLE_DIR != 'shortcodable') {
 $htmlEditorNames = Config::inst()->get('Shortcodable', 'htmleditor_names');
 if (is_array($htmlEditorNames)) {
     foreach ($htmlEditorNames as $htmlEditorName) {
-        HtmlEditorConfig::get($htmlEditorName)->enablePlugins(array(
-            'shortcodable' => sprintf('../../../%s/javascript/editor_plugin.js', SHORTCODABLE_DIR)
-        ));
+        // HtmlEditorConfig::get($htmlEditorName)->enablePlugins(array(
+        //     'shortcodable' => sprintf('/resources/%s/javascript/editor_plugin.js', SHORTCODABLE_DIR)
+        // ));
         HtmlEditorConfig::get($htmlEditorName)->addButtonsToLine(1, 'shortcodable');
     }
 }
