@@ -2,13 +2,13 @@
 Name: shortcodable
 After:
     - framework/*
-    - cms/*
+    # - cms/*
 ---
 
 LeftAndMain:
   extra_requirements_javascript:
-    - 'shortcodable/javascript/editor_plugin.js'
-    - 'shortcodable/javascript/shortcodable.js'
+    - 'resources/shortcodable/javascript/editor_plugin.js'
+    - 'resources/shortcodable/javascript/shortcodable.js'
   extra_requirements_css:
     - 'shortcodable/css/shortcodable.css'
 

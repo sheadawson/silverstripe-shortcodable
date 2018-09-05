@@ -2,9 +2,10 @@
 
 namespace Silverstripe;
 
-use SilverStripe\Core\Object;
+use SilverStripe\View\ViewableData;
 use SilverStripe\View\Parsers\ShortcodeParser;
 use SilverStripe\Core\Config\Config;
+use Silverstripe\Shortcodable\ShortcodableParser;
 
 /**
  * Shortcodable
@@ -12,7 +13,7 @@ use SilverStripe\Core\Config\Config;
  *
  * @author shea@livesource.co.nz
  **/
-class Shortcodable extends Object
+class Shortcodable extends ViewableData
 {
     private static $shortcodable_classes = array();
 
@@ -32,7 +33,7 @@ class Shortcodable extends Object
                 user_error("Failed to register \"$class\" with shortcodable. $class must have the method parse_shortcode(). See /shortcodable/README.md", E_USER_ERROR);
             }
             ShortcodeParser::get('default')->register($class, array($class, 'parse_shortcode'));
-            singleton('ShortcodableParser')->register($class);
+            singleton(ShortcodableParser::class)->register($class);
         }
     }
 
