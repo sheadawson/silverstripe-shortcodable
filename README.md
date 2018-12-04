@@ -4,6 +4,19 @@
 
 ![Screenshot](https://raw.github.com/sheadawson/silverstripe-shortcodable/master/images/screenshot.png)
 
+## SS4 compatible version is WIP. Please submit PRs if you'd like to help move this along!
+
+What’s working:
+
+* The TinyMCE button/popup
+*The form in the popup dialog
+
+What’s not working:
+
+* Placeholders
+* Editing an existing shortcode
+* Probably other things
+
 Provides a GUI for CMS users to insert Shortcodes into the HTMLEditorField + an API for developers to define Shortcodable DataObjects and Views. This allows CMS users to easily embed and customise DataObjects and templated HTML snippets anywhere amongst their page content. Shortcodes can optionally be represented in the WYSIWYG with a custom placeholder image.
 
 ## Requirements
