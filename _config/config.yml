@@ -1,29 +1,21 @@
 ---
 Name: shortcodable
-After:
-    - framework/*
-    - cms/*
 ---
-
-LeftAndMain:
+SilverStripe\Admin\LeftAndMain:
   extra_requirements_javascript:
-    - 'shortcodable/javascript/editor_plugin.js'
-    - 'shortcodable/javascript/shortcodable.js'
+    - 'sheadawson/silverstripe-shortcodable:javascript/editor_plugin.js'
+    - 'sheadawson/silverstripe-shortcodable:javascript/shortcodable.js'
   extra_requirements_css:
-    - 'shortcodable/css/shortcodable.css'
-
+    - 'sheadawson/silverstripe-shortcodable:css/shortcodable.css'
 SilverStripe\Control\Director:
   rules:
     ShortcodableController: Silverstripe\Shortcodable\Controller\ShortcodableController
-
-Shortcodable:
+Silverstripe\Shortcodable\Shortcodable:
   htmleditor_names:
     - cms
-
-HtmlEditorField:
+Silverstripe\Shortcodable\HtmlEditorField:
   extensions:
-    - ShortcodableHtmlEditorField
-
-ShortcodeParser:
+    - Silverstripe\Shortcodable\Extensions\ShortcodableHtmlEditorField
+SilverStripe\View\Parsers\ShortcodeParser:
   extensions:
-    - ShortcodableShortcodeParserExtension
+    - Silverstripe\Shortcodable\Extensions\ShortcodableShortcodeParserExtension

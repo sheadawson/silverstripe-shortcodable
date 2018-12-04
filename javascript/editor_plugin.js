@@ -26,14 +26,14 @@
                 });
 
                 // On load replace shorcode with placeholder.
-                ed.onLoadContent.add(function (ed, o) {
-                    var newContent = me.replaceShortcodesWithPlaceholders(o.content, ed);
-                    ed.execCommand('mceSetContent', false, newContent, false);
+                ed.on('SetContent', function (event) {
+                    var newContent = me.replaceShortcodesWithPlaceholders(event.content, ed);
+                    ed.execCommand('setContent', false, newContent, false);
                 });
 
-                ed.onDblClick.add(function (ed, e) {
-                    var dom = ed.dom, node = e.target;
-                    if (node.nodeName === 'IMG' && dom.hasClass(node, 'shortcode-placeholder') && e.button !== 2) {
+                ed.on('DblClick', function (event) {
+                    var dom = ed.dom, node = event.target;
+                    if (node.nodeName === 'IMG' && dom.hasClass(node, 'shortcode-placeholder') && event.button !== 2) {
                         ed.execCommand('shortcodable');
                     }
                 });
