@@ -1,3 +1,8 @@
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+
 (function($) {
     $.entwine('ss', function($) {
 
@@ -8,22 +13,43 @@
             }
         });
 
-        // add shortcode controller url to cms-editor-dialogs
-        $('#cms-editor-dialogs').entwine({
-            onmatch: function(){
-                this.attr('data-url-shortcodeform', 'ShortcodableController/ShortcodeForm/forTemplate');
-            }
-        });
-
         // open shortcode dialog
         $('textarea.htmleditor').entwine({
-            openShortcodeDialog: function() {
-                this.openDialog('shortcode');
-            },
             getPlaceholderClasses: function() {
                 var classes = $(this).data('placeholderclasses');
                 if (classes) {
                     return classes.split(',');
+                }
+            },
+            openShortcodeDialog: function() {
+                var capitalize = function(text) {
+                    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+                };
+
+                var type = 'shortcode';
+
+                var self = this, url = 'ShortcodableController/ShortcodeForm/forTemplate',
+                    dialog = $('.htmleditorfield-' + type + 'dialog');
+
+                if(dialog.length) {
+                    dialog.getForm().setElement(this);
+                    dialog.open();
+                } else {
+                    // Show a placeholder for instant feedback. Will be replaced with actual
+                    // form dialog once its loaded.
+                    dialog = $('<div class="htmleditorfield-dialog htmleditorfield-' + type + 'dialog loading">');
+                    $('body').append(dialog);
+                    $.ajax({
+                        url: url,
+                        complete: function() {
+                            dialog.removeClass('loading');
+                        },
+                        success: function(html) {
+                            dialog.html(html);
+                            dialog.getForm().setElement(self);
+                            dialog.trigger('ssdialogopen');
+                        }
+                    });
                 }
             },
             /**
@@ -39,7 +65,52 @@
             },
         });
 
+        $('.htmleditorfield-dialog').entwine({
+            onadd: function() {
+                // Create jQuery dialog
+                if (!this.is('.ui-dialog-content')) {
+                    this.ssdialog({autoOpen: true});
+                }
+
+                this._super();
+            },
+
+            getForm: function() {
+                return this.find('form');
+            },
+            open: function() {
+                this.ssdialog('open');
+            },
+            close: function() {
+                this.ssdialog('close');
+            },
+            toggle: function(bool) {
+                if(this.is(':visible')) this.close();
+                else this.open();
+            }
+        });
+
         $('form.htmleditorfield-shortcodable').entwine({
+            Selection: null,
+
+            // Implementation-dependent serialization of the current editor selection state
+            Bookmark: null,
+
+            // DOMElement pointing to the currently active textarea
+            Element: null,
+
+            setSelection: function(node) {
+                return this._super($(node));
+            },
+
+            onremove: function() {
+                this.setSelection(null);
+                this.setBookmark(null);
+                this.setElement(null);
+
+                this._super();
+            },
+
             // load the shortcode form into the dialog
             reloadForm: function(from, data) {
                 var postdata = {};
@@ -51,7 +122,7 @@
 
                 this.addClass('loading');
 
-                var url = $('#cms-editor-dialogs').attr('data-url-shortcodeform');
+                var url = 'ShortcodableController/ShortcodeForm/forTemplate';
 
                 $.post(url, postdata, function(data){
                     var form = $('form.htmleditorfield-shortcodable')
@@ -73,11 +144,30 @@
                     this.modifySelection(function(ed){
                         var shortcodable = tinyMCE.activeEditor.plugins.shortcodable;
                         ed.replaceContent(shortcode);
-                        var newContent = shortcodable.replaceShortcodesWithPlaceholders(ed.getContent(), ed.getInstance());
-                        console.log(newContent);
-                        ed.setContent(newContent);
+
+                        if (this.getElement().getPlaceholderClasses()) {
+                            var newContent = shortcodable.replaceShortcodesWithPlaceholders(ed.getContent(), ed.getInstance());
+                            ed.setContent(newContent);
+                        }
                     });
                 }
+            },
+            modifySelection: function(callback) {
+                var ed = this.getEditor();
+
+                ed.moveToBookmark(this.getBookmark());
+                callback.call(this, ed);
+
+                this.setSelection(ed.getSelectedNode());
+                this.setBookmark(ed.createBookmark());
+
+                ed.blur();
+            },
+            getEditor: function(){
+                return this.getElement().getEditor();
+            },
+            getDialog: function() {
+                return this.closest('.htmleditorfield-dialog');
             },
             // get the html to insert
             getHTML: function(){
@@ -97,7 +187,6 @@
             // get shortcode attributes from shortcode form
             getAttributes: function() {
                 var attributes = {};
-                var shortcodeType = this.find(':input[name=ShortcodeType]').val();
                 var id = this.find(':input[name=id]').val();
                 if (id) {
                     attributes['id'] = id;
@@ -135,7 +224,7 @@
                 }
 
                 return {
-                    'shortcodeType' : this.find(':input[name=ShortcodeType]').val(),
+                    'shortcodeType' : this.find(':input[name=ShortcodeType]').val().replaceAll(/\\/g, '_'),
                     'attributes' : attributes
                 };
             },

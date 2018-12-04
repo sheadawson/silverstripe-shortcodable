@@ -12,6 +12,6 @@
 	max-width: 100%;
 }
 
-.defaultSkin span.mce_shortcode{
-	background: url(../images/shortcodable.png) no-repeat center center;
+.mce-i-shortcodable {
+	background-image: url(../images/shortcodable.png) !important;
 }
