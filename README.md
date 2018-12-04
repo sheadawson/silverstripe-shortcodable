@@ -9,7 +9,7 @@
 What’s working:
 
 * The TinyMCE button/popup
-*The form in the popup dialog
+* The form in the popup dialog
 
 What’s not working:
 
