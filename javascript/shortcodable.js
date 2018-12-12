@@ -31,10 +31,12 @@
              */
             'from .cms-edit-form': {
                 onbeforesubmitform: function(e) {
-                    var shortcodable = tinyMCE.activeEditor.plugins.shortcodable;
-                    var ed = this.getEditor();
-                    var newContent = shortcodable.replacePlaceholdersWithShortcodes($(this).val(), ed);
-                    $(this).val(newContent);
+                    if (tinyMCE && tinyMCE.activeEditor && tinyMCE.activeEditor.plugins) {
+                        var shortcodable = tinyMCE.activeEditor.plugins.shortcodable;
+                        var ed = this.getEditor();
+                        var newContent = shortcodable.replacePlaceholdersWithShortcodes($(this).val(), ed);
+                        $(this).val(newContent);
+                    }
                 }
             },
         });
