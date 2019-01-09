@@ -13,8 +13,6 @@
             },
 
             init: function (ed, url) {
-                var me = tinyMCE.activeEditor.plugins.shortcodable;
-
                 ed.addButton('shortcodable', {
                     title: 'Insert Shortcode',
                     cmd: 'shortcodable',
@@ -27,6 +25,10 @@
 
                 // On load replace shorcode with placeholder.
                 ed.on('SetContent', function (event) {
+                    var me = tinyMCE.activeEditor.plugins.shortcodable;
+                    if (!me) {
+                        return;
+                    }
                     var newContent = me.replaceShortcodesWithPlaceholders(event.content, ed);
                     ed.execCommand('setContent', false, newContent, false);
                 });
