@@ -7,6 +7,8 @@ if (SHORTCODABLE_DIR != 'shortcodable') {
     throw new Exception('The edit shortcodable module is not installed in correct directory. The directory should be named "shortcodable"');
 }
 
+if (!class_exists('SS_Object')) class_alias('Object', 'SS_Object');
+
 // enable shortcodable buttons and add to HtmlEditorConfig
 $htmlEditorNames = Config::inst()->get('Shortcodable', 'htmleditor_names');
 if (is_array($htmlEditorNames)) {
