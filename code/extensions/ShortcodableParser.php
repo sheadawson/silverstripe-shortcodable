@@ -5,7 +5,7 @@
  *
  * @todo update SS ShortcodeParser to offer a public api for converting a shortcode to a data array, and use that instead.
  */
-class ShortcodableParser extends Object
+class ShortcodableParser extends SS_Object
 {
     /**
      * @var array
