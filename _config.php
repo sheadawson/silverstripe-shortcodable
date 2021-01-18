@@ -12,7 +12,7 @@ if (SHORTCODABLE_DIR != 'shortcodable') {
 }
 
 // enable shortcodable buttons and add to HtmlEditorConfig
-$htmlEditorNames = Config::inst()->get('Shortcodable', 'htmleditor_names');
+$htmlEditorNames = Config::inst()->get(Shortcodable::class, 'htmleditor_names');
 if (is_array($htmlEditorNames)) {
     foreach ($htmlEditorNames as $htmlEditorName) {
         // HtmlEditorConfig::get($htmlEditorName)->enablePlugins(array(
@@ -23,5 +23,5 @@ if (is_array($htmlEditorNames)) {
 }
 
 // register classes added via yml config
-$classes = Config::inst()->get('Shortcodable', 'shortcodable_classes');
+$classes = Config::inst()->get(Shortcodable::class, 'shortcodable_classes');
 Shortcodable::register_classes($classes);
