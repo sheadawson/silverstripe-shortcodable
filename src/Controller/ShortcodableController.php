@@ -13,6 +13,7 @@ use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\Form;
+use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Permission;
 
 /**
@@ -227,7 +228,7 @@ class ShortcodableController extends LeftAndMain
             return;
         }
 
-        if ($id && is_subclass_of($classname, 'DataObject')) {
+        if ($id && is_subclass_of($classname, DataObject::class)) {
             $object = $classname::get()->byID($id);
         } else {
             $object = singleton($classname);
