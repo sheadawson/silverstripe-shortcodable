@@ -30,7 +30,7 @@
         "expose": [
             "css",
             "images",
-            "javascript",
+            "javascript"
         ]
     },
     "homepage": "https://github.com/sheadawson/silverstripe-shortcodable"
