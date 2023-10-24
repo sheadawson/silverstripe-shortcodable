@@ -5,7 +5,7 @@
  *
  * @author shea@livesource.co.nz
  **/
-class Shortcodable extends Object
+class Shortcodable extends SS_Object
 {
     private static $shortcodable_classes = array();
 
